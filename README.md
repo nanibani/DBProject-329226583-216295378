@@ -38,15 +38,23 @@
 - **בדיקת זכייה או מועמדות לפרסים עבור תכנים**  
 - **ניווט בין תכנים הקשורים באותו פרנצ'ייז**  
 
----
 
-בהמשך הדוח (בשלבים הבאים) נכלול:
+### תרשים ERD
 
-- תרשים ER מלא  
-- תיאור כל טבלה ומאפייניה  
-- דוגמאות לנתונים ודוחות שאפשר להפיק מהמערכת  
+![the ERD Diagram ](https://github.com/user-attachments/assets/a5274f2d-9730-4993-8dea-9ecb0d8ca351)
 
----
+### תרשים DSD
 
-*המשך יבוא בשלב ב של הפרויקט...*
 
+![the DSD Diagram ](https://github.com/user-attachments/assets/fbf1b545-afff-4f8d-a616-11a244a8d56e)
+
+### הכנסת נתונים באמצעות mockaroo
+
+![WhatsApp Image 2025-04-22 at 18 53 11_f1fd6eeb](https://github.com/user-attachments/assets/aa995b80-6291-41a1-b140-0f07b395800b)
+
+### הכנסת נתונים באמצעות קוד פייתון
+
+![WhatsApp Image 2025-04-22 at 18 35 43_d1f13cbc](https://github.com/user-attachments/assets/fe20fbbd-6f65-49f1-ad64-08cb97c4798a)
+
+### הכנסת נתונים ידנית
+![image](https://github.com/user-attachments/assets/a741d760-ea89-4f17-98b5-63e136b4d79b)
