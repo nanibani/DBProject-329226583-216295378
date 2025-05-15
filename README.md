@@ -60,4 +60,11 @@
 ![WhatsApp Image 2025-04-22 at 18 35 43_d1f13cbc](https://github.com/user-attachments/assets/fe20fbbd-6f65-49f1-ad64-08cb97c4798a)
 
 ### הכנסת נתונים ידנית
+פה הכנסנו ידנית את הנתןנים לתוך קובץ csv
 ![image](https://github.com/user-attachments/assets/a741d760-ea89-4f17-98b5-63e136b4d79b)
+
+### יצרנו קובץ גיבוי
+בכדי שנוכל לשחזר את הנתונים ולעבוד משני המחשבים
+![Screenshot 2025-05-16 013257](https://github.com/user-attachments/assets/200b11cd-a49a-4369-a242-23f8fa52557b)
+
+
