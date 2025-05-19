@@ -65,6 +65,10 @@
 
 ### יצרנו קובץ גיבוי
 בכדי שנוכל לשחזר את הנתונים ולעבוד משני המחשבים
+
+
 ![Screenshot 2025-05-16 013257](https://github.com/user-attachments/assets/200b11cd-a49a-4369-a242-23f8fa52557b)
 
-
+### כעת עשינו restore:
+![Screenshot 2025-05-19 225932](https://github.com/user-attachments/assets/bbd31e64-3a0f-4b06-b05c-180a7b03aab7)
+![Screenshot 2025-05-19 230026](https://github.com/user-attachments/assets/ae4627f7-7259-4701-b3bd-b235d5730749)
