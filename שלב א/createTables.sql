@@ -1,9 +1,9 @@
 CREATE TABLE Title
 (
+  Title_ID INT NOT NULL,
   Title_Name VARCHAR(50) NOT NULL,
   Age_Rating INT NOT NULL,
   Sequel_ID INT,
-  Title_ID INT NOT NULL,
   PRIMARY KEY (Title_ID)
 );
 
