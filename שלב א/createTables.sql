@@ -8,6 +8,26 @@ CREATE TABLE Award
   FOREIGN KEY (Title_ID) REFERENCES Title(Title_ID)
 );
 
+CREATE TABLE Belongs_to
+(
+  Franchise_ID INT NOT NULL,
+  Title_ID INT NOT NULL,
+  PRIMARY KEY (Franchise_ID, Title_ID),
+  FOREIGN KEY (Franchise_ID) REFERENCES Franchise(Franchise_ID),
+  FOREIGN KEY (Title_ID) REFERENCES Title(Title_ID)
+);
+
+CREATE TABLE Episode
+(
+  Season_Number INT NOT NULL,
+  Episode_Number INT NOT NULL,
+  Duration INT NOT NULL,
+  Date_Aired DATE NOT NULL,
+  Title_ID INT NOT NULL,
+  PRIMARY KEY (Episode_Number, Season_Number, Title_ID),
+  FOREIGN KEY (Season_Number, Title_ID) REFERENCES Season(Season_Number, Title_ID)
+);
+
 CREATE TABLE Title
 (
   Title_ID INT NOT NULL,
@@ -60,14 +80,6 @@ CREATE TABLE MovieGenre
   FOREIGN KEY (Genre_ID) REFERENCES Genre(Genre_ID)
 );
 
-CREATE TABLE Belongs_to
-(
-  Franchise_ID INT NOT NULL,
-  Title_ID INT NOT NULL,
-  PRIMARY KEY (Franchise_ID, Title_ID),
-  FOREIGN KEY (Franchise_ID) REFERENCES Franchise(Franchise_ID),
-  FOREIGN KEY (Title_ID) REFERENCES Title(Title_ID)
-);
 
 CREATE TABLE Season
 (
@@ -77,15 +89,4 @@ CREATE TABLE Season
   Title_ID INT NOT NULL,
   PRIMARY KEY (Season_Number, Title_ID),
   FOREIGN KEY (Title_ID) REFERENCES TV_show(Title_ID)
-);
-
-CREATE TABLE Episode
-(
-  Episode_Number INT NOT NULL,
-  Duration INT NOT NULL,
-  Date_Aired DATE NOT NULL,
-  Season_Number INT NOT NULL,
-  Title_ID INT NOT NULL,
-  PRIMARY KEY (Episode_Number, Season_Number, Title_ID),
-  FOREIGN KEY (Season_Number, Title_ID) REFERENCES Season(Season_Number, Title_ID)
 );
