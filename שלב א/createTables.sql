@@ -61,6 +61,15 @@ CREATE TABLE MovieGenre
   FOREIGN KEY (Title_ID) REFERENCES Title(Title_ID),
   FOREIGN KEY (Genre_ID) REFERENCES Genre(Genre_ID)
 );
+CREATE TABLE Season
+(
+  Title_ID INT NOT NULL,
+  Season_Number INT NOT NULL,
+  Number_of_episodes INT NOT NULL,
+  current_Status VARCHAR(10) NOT NULL,
+  PRIMARY KEY (Season_Number, Title_ID),
+  FOREIGN KEY (Title_ID) REFERENCES TV_show(Title_ID)
+);
 
 CREATE TABLE Title
 (
@@ -71,20 +80,10 @@ CREATE TABLE Title
   PRIMARY KEY (Title_ID)
 );
 
-CREATE TABLE TV_show
+CREATE TABLE Tv_show
 (
-  Number_of_seasons INT NOT NULL,
+  number_of_seasons INT NOT NULL,
   Title_ID INT NOT NULL,
-  PRIMARY KEY (Title_ID),
-  FOREIGN KEY (Title_ID) REFERENCES Title(Title_ID)
+  PRIMARY KEY (Title_ID)
 );
 
-CREATE TABLE Season
-(
-  Season_Number INT NOT NULL,
-  Number_of_episodes INT NOT NULL,
-  Status VARCHAR(10) NOT NULL,
-  Title_ID INT NOT NULL,
-  PRIMARY KEY (Season_Number, Title_ID),
-  FOREIGN KEY (Title_ID) REFERENCES TV_show(Title_ID)
-);
