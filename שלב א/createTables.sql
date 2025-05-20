@@ -1,3 +1,13 @@
+CREATE TABLE Award
+(
+  Award_Name VARCHAR(50) NOT NULL,
+  Given_By VARCHAR(50) NOT NULL,
+  Result VARCHAR(50) NOT NULL,
+  Title_ID INT NOT NULL,
+  PRIMARY KEY (Award_Name,Given_By,Title_ID ),
+  FOREIGN KEY (Title_ID) REFERENCES Title(Title_ID)
+);
+
 CREATE TABLE Title
 (
   Title_ID INT NOT NULL,
@@ -40,15 +50,6 @@ CREATE TABLE Franchise
   PRIMARY KEY (Franchise_ID)
 );
 
-CREATE TABLE Award
-(
-  Award_Name VARCHAR(50) NOT NULL,
-  Given_By VARCHAR(50) NOT NULL,
-  Result VARCHAR(50) NOT NULL,
-  Title_ID INT NOT NULL,
-  PRIMARY KEY (Award_Name),
-  FOREIGN KEY (Title_ID) REFERENCES Title(Title_ID)
-);
 
 CREATE TABLE MovieGenre
 (
