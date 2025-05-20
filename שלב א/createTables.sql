@@ -84,6 +84,7 @@ CREATE TABLE Tv_show
 (
   number_of_seasons INT NOT NULL,
   Title_ID INT NOT NULL,
+  FOREIGN KEY (Title_ID) REFERENCES Title (Title_ID)
   PRIMARY KEY (Title_ID)
 );
 
