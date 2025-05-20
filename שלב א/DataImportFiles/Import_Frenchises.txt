@@ -1,0 +1,8 @@
+Franchise_ID,Franchise_Name,Number_of_Titles
+1,MCU,40
+2,DCU,30
+3,Star Wars,16
+4,Pixar,16
+5,Disney,15
+6,Gundam,12
+7,Fate,21
