@@ -74,60 +74,6 @@ HAVING
 ORDER BY 
     Total_Runtime_Minutes ASC;
 
---Select all awards won by titles in the Lord of the Rings franchise
-SELECT 
-    T.Title_Name,
-    A.Award_Name,
-    A.Given_By,
-    A.Result
-FROM 
-    Franchise F
-JOIN 
-    Belongs_to B ON F.Franchise_ID = B.Franchise_ID
-JOIN 
-    Title T ON B.Title_ID = T.Title_ID
-JOIN 
-    Award A ON T.Title_ID = A.Title_ID
-WHERE 
-    F.Franchise_Name = 'Lord of the Rings'
-    AND A.Result = 'Won'
-ORDER BY 
-    T.Title_Name, A.Award_Name;
-
---All franchises where the titles in the franchise have at least 3 different age ratings
-SELECT 
-    F.Franchise_Name,
-    COUNT(DISTINCT T.Age_Rating) AS Distinct_Age_Ratings
-FROM 
-    Franchise F
-JOIN 
-    Belongs_to B ON F.Franchise_ID = B.Franchise_ID
-JOIN 
-    Title T ON B.Title_ID = T.Title_ID
-GROUP BY 
-    F.Franchise_Name
-HAVING 
-    COUNT(DISTINCT T.Age_Rating_
-
---All movies that have won the "best director" award from at least three different organizations
-SELECT 
-    T.Title_Name,
-    COUNT(DISTINCT A.Given_By) AS Organizations_Won_From
-FROM 
-    Award A
-JOIN 
-    Title T ON A.Title_ID = T.Title_ID
-JOIN 
-    Movie M ON T.Title_ID = M.Title_ID  -- restrict to movies
-WHERE 
-    A.Award_Name = 'Best Director'
-    AND A.Result = 'Won'
-GROUP BY 
-    T.Title_Name
-HAVING 
-    COUNT(DISTINCT A.Given_By) >= 3
-ORDER BY 
-    Organizations_Won_From DESC;
 
 --Select all movies that are a sequel to a TV show
 SELECT 
@@ -144,7 +90,62 @@ JOIN
 ORDER BY 
     Movie_Title;
 
+-- Displays for each franchise its name, total titles, number of movies, and number of TV shows.
+SELECT
+    F.Franchise_Name,
+    COUNT(T.Title_ID) AS Total_Titles,
+    SUM(CASE WHEN M.Title_ID IS NOT NULL THEN 1 ELSE 0 END) AS Number_of_Movies,
+    SUM(CASE WHEN TV.Title_ID IS NOT NULL THEN 1 ELSE 0 END) AS Number_of_TV_Shows
+FROM
+    Franchise F
+JOIN
+    Belongs_to BT ON F.Franchise_ID = BT.Franchise_ID
+JOIN
+    Title T ON BT.Title_ID = T.Title_ID
+LEFT JOIN
+    Movie M ON T.Title_ID = M.Title_ID
+LEFT JOIN
+    Tv_show TV ON T.Title_ID = TV.Title_ID
+GROUP BY
+    F.Franchise_ID, F.Franchise_Name
+ORDER BY
+    Total_Titles DESC, F.Franchise_Name;
+-- Finds TV shows with at least one completed season (status 'Completed') and displays their declared total seasons and total episodes.
+SELECT
+    T.Title_Name,
+    TV.number_of_seasons AS Declared_Total_Seasons,
+    SUM(S.Number_of_episodes) AS Total_Episodes_Across_All_Seasons_In_DB
+FROM
+    Title T
+JOIN
+    Tv_show TV ON T.Title_ID = TV.Title_ID
+JOIN
+    Season S ON TV.Title_ID = S.Title_ID
+WHERE
+    T.Title_ID IN (SELECT DISTINCT S_inner.Title_ID FROM Season S_inner WHERE S_inner.current_Status = 'Completed') -- Assuming 'Completed' is an existing value indicating a finished season
+GROUP BY
+    T.Title_ID, T.Title_Name, TV.number_of_seasons
+ORDER BY
+    Total_Episodes_Across_All_Seasons_In_DB DESC, T.Title_Name;
 
+-- Displays titles that are not sequels (Sequel_ID IS NULL), their age rating, total award mentions, and number of awards won (where Result = 'Won').
+SELECT
+    T.Title_Name,
+    T.Age_Rating,
+    COUNT(A.Title_ID) AS Total_Award_Mentions,
+    SUM(CASE WHEN A.Result = 'Won' THEN 1 ELSE 0 END) AS Awards_Won
+FROM
+    Title T
+LEFT JOIN
+    Award A ON T.Title_ID = A.Title_ID
+WHERE
+    T.Sequel_ID IS NULL -- Titles that are not sequels to anything else
+GROUP BY
+    T.Title_ID, T.Title_Name, T.Age_Rating
+ORDER BY
+    Awards_Won DESC, Total_Award_Mentions DESC, T.Title_Name;
+
+--delete queries
 --Delete all titles from before the year 1975 that have not won any awards
 DELETE FROM Movie
 WHERE Title_ID IN (
