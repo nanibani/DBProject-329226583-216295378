@@ -1,8 +1,3 @@
--- ====================================================================
---      Final Consolidated File of All Updated SELECT Queries
--- ====================================================================
-
-
 -- 1. Selects action, adventure, and thriller movies before 2000
 --    (Simple version showing each genre match in a separate row)
 SELECT
