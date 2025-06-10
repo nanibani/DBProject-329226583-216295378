@@ -1,96 +1,111 @@
---Select all action, adventure, and thriller movies released before the year 2000
-SELECT 
+-- ====================================================================
+--      Final Consolidated File of All Updated SELECT Queries
+-- ====================================================================
+
+
+-- 1. Selects action, adventure, and thriller movies before 2000
+--    (Simple version showing each genre match in a separate row)
+SELECT
     T.Title_Name,
     M.Release_Date,
     M.Duration,
-    M.Movie_Type
-FROM 
+    G.Genre_Name
+FROM
     Title T
-JOIN 
+JOIN
     Movie M ON T.Title_ID = M.Title_ID
-JOIN 
+JOIN
     MovieGenre MG ON T.Title_ID = MG.Title_ID
-JOIN 
+JOIN
     Genre G ON MG.Genre_ID = G.Genre_ID
-WHERE 
+WHERE
     G.Genre_Name IN ('Action', 'Adventure', 'Thriller')
-    AND M.Release_Date < '2000-01-01';
-	
+    AND M.Release_Date < '2000-01-01'
+ORDER BY
+    T.Title_Name, M.Release_Date;
 
---Group together movies by awards they have won, if the awards is given by multiple organizations, put all movies that won it in the same group
-SELECT 
+
+-- 2. Groups movies by awards won
+--    (Simple version showing counts of movies and award givers)
+SELECT
     A.Award_Name,
-    COUNT(DISTINCT A.Title_ID) AS Number_of_Movies_Won,
-    STRING_AGG(DISTINCT T.Title_Name, ', ') AS Movie_Titles,
-    STRING_AGG(DISTINCT A.Given_By, ', ') AS Award_Givers
-FROM 
+    COUNT(DISTINCT T.Title_ID) AS Number_of_Movies_Won,
+    COUNT(DISTINCT A.Given_By) AS Number_of_Award_Givers
+FROM
     Award A
-JOIN 
+JOIN
     Title T ON A.Title_ID = T.Title_ID
-JOIN 
-    Movie M ON T.Title_ID = M.Title_ID
-WHERE 
-    A.Result = 'Won'
-GROUP BY 
+WHERE
+    A.Result = 'Won' AND T.Title_ID IN (SELECT Title_ID FROM Movie)
+GROUP BY
     A.Award_Name
-ORDER BY 
+ORDER BY
     Number_of_Movies_Won DESC;
 
---Select all TV shows where the average episode length is over 50 minutes
-SELECT 
+
+-- 3. Selects TV shows with an average episode length over 50 minutes
+--    (Includes the fix for the ROUND function error)
+SELECT
     T.Title_Name,
-    AVG(E.Duration) AS Average_Episode_Duration
-FROM 
+    TV.number_of_seasons AS Declared_Seasons,
+    COUNT(E.Episode_Number) AS Episodes_In_DB,
+    ROUND(CAST(AVG(E.Duration) AS NUMERIC), 2) AS Average_Episode_Duration
+FROM
     TV_show TV
-JOIN 
+JOIN
     Title T ON TV.Title_ID = T.Title_ID
-JOIN 
+JOIN
     Season S ON TV.Title_ID = S.Title_ID
-JOIN 
+JOIN
     Episode E ON S.Season_Number = E.Season_Number AND S.Title_ID = E.Title_ID
-GROUP BY 
-    T.Title_Name
-HAVING 
+GROUP BY
+    T.Title_ID, T.Title_Name, TV.number_of_seasons
+HAVING
     AVG(E.Duration) > 50
-ORDER BY 
+ORDER BY
     Average_Episode_Duration DESC;
 
---Select all Tv shows where the total runtime is under 5 hours
-SELECT 
+
+-- 4. Selects TV shows with a total runtime under 5 hours
+SELECT
     T.Title_Name,
-    SUM(E.Duration) AS Total_Runtime_Minutes
-FROM 
+    SUM(E.Duration) AS Total_Runtime_Minutes,
+    TV.number_of_seasons AS Declared_Seasons
+FROM
     TV_show TV
-JOIN 
+JOIN
     Title T ON TV.Title_ID = T.Title_ID
-JOIN 
+JOIN
     Season S ON TV.Title_ID = S.Title_ID
-JOIN 
+JOIN
     Episode E ON S.Season_Number = E.Season_Number AND S.Title_ID = E.Title_ID
-GROUP BY 
-    T.Title_Name
-HAVING 
+GROUP BY
+    T.Title_ID, T.Title_Name, TV.number_of_seasons
+HAVING
     SUM(E.Duration) < 300
-ORDER BY 
+ORDER BY
     Total_Runtime_Minutes ASC;
 
 
---Select all movies that are a sequel to a TV show
-SELECT 
+-- 5. Selects movies that are a sequel to a TV show
+SELECT
     T1.Title_Name AS Movie_Title,
-    T2.Title_Name AS Prequel_TV_Show
-FROM 
+    T2.Title_Name AS Prequel_TV_Show,
+    M.Release_Date AS Movie_Release_Date,
+    M.Duration AS Movie_Duration
+FROM
     Title T1
-JOIN 
-    Movie M ON T1.Title_ID = M.Title_ID  -- T1 is a movie
-JOIN 
-    Title T2 ON T1.Sequel_ID = T2.Title_ID  -- T2 is the prequel
-JOIN 
-    TV_show TV ON T2.Title_ID = TV.Title_ID  -- T2 is a TV show
-ORDER BY 
-    Movie_Title;
+JOIN
+    Movie M ON T1.Title_ID = M.Title_ID
+JOIN
+    Title T2 ON T1.Sequel_ID = T2.Title_ID
+JOIN
+    TV_show TV ON T2.Title_ID = TV.Title_ID
+ORDER BY
+    Movie_Release_Date;
 
--- Displays for each franchise its name, total titles, number of movies, and number of TV shows.
+
+-- 6. Displays a summary for each franchise
 SELECT
     F.Franchise_Name,
     COUNT(T.Title_ID) AS Total_Titles,
@@ -110,11 +125,14 @@ GROUP BY
     F.Franchise_ID, F.Franchise_Name
 ORDER BY
     Total_Titles DESC, F.Franchise_Name;
--- Finds TV shows with at least one completed season (status 'Completed') and displays their declared total seasons and total episodes.
+
+
+-- 7. Finds TV shows with at least one completed season
 SELECT
     T.Title_Name,
     TV.number_of_seasons AS Declared_Total_Seasons,
-    SUM(S.Number_of_episodes) AS Total_Episodes_Across_All_Seasons_In_DB
+    COUNT(DISTINCT S.Season_Number) AS Seasons_In_DB,
+    SUM(S.Number_of_episodes) AS Total_Episodes_In_DB
 FROM
     Title T
 JOIN
@@ -122,13 +140,14 @@ JOIN
 JOIN
     Season S ON TV.Title_ID = S.Title_ID
 WHERE
-    T.Title_ID IN (SELECT DISTINCT S_inner.Title_ID FROM Season S_inner WHERE S_inner.current_Status = 'Completed') -- Assuming 'Completed' is an existing value indicating a finished season
+    T.Title_ID IN (SELECT DISTINCT S_inner.Title_ID FROM Season S_inner WHERE S_inner.current_Status = 'Completed')
 GROUP BY
     T.Title_ID, T.Title_Name, TV.number_of_seasons
 ORDER BY
-    Total_Episodes_Across_All_Seasons_In_DB DESC, T.Title_Name;
+    Total_Episodes_In_DB DESC, T.Title_Name;
 
--- Displays titles that are not sequels (Sequel_ID IS NULL), their age rating, total award mentions, and number of awards won (where Result = 'Won').
+
+-- 8. Displays titles that are not sequels, sorted by the number of awards won
 SELECT
     T.Title_Name,
     T.Age_Rating,
@@ -139,7 +158,7 @@ FROM
 LEFT JOIN
     Award A ON T.Title_ID = A.Title_ID
 WHERE
-    T.Sequel_ID IS NULL -- Titles that are not sequels to anything else
+    T.Sequel_ID IS NULL
 GROUP BY
     T.Title_ID, T.Title_Name, T.Age_Rating
 ORDER BY
