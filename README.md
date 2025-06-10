@@ -79,29 +79,30 @@
 
 ### שאילתות SELECT
 
-1. סרטי פעולה, הרפתקאות ומותחן שפורסמו לפני שנת 2000
-   ![query1](https://github.com/user-attachments/assets/3a8ef283-9cf2-445a-b2e0-097eb0a1d1c7)
+1. כל סרטי האקשן, ההרפתקאות והמותחן שיצאו לפני שנת 2000
+![image](https://github.com/user-attachments/assets/f2097d12-0eb0-4ae0-b8ff-d7c433101aa3)
 
 2. קיבוץ סרטים לפי פרסים
-   ![query2](https://github.com/user-attachments/assets/6fdb0873-810c-4feb-b484-764959327a19)
+   ![image](https://github.com/user-attachments/assets/825761b0-a56f-4a38-999f-7dbc53229c90)
 
 3. סדרות עם אורך פרק ממוצע מעל 50 דקות
-   ![query3](https://github.com/user-attachments/assets/abc67b5d-f39f-44dd-bf0f-6be27a507106)
+   ![image](https://github.com/user-attachments/assets/feb199ef-7932-40f7-bd41-7a0cf2bea6e1)
 
 4. סדרות עם זמן שידור כולל מתחת ל־5 שעות
-   ![query4](https://github.com/user-attachments/assets/3d1bd57b-3103-46e0-bc3d-aaa41c6ef269)
+   ![image](https://github.com/user-attachments/assets/4a9108e5-431f-4288-b117-b881f5cf329f)
 
 5. סרטים עם סדרות המשך
-   ![query5](https://github.com/user-attachments/assets/4c91df52-34b1-4bee-89cb-455b0176dfbe)
+   ![image](https://github.com/user-attachments/assets/45717856-8414-4b4b-beb6-159de549b40c)
 
 6. ניתוח זכיינויות: סרטים לעומת סדרות
-   ![query6](https://github.com/user-attachments/assets/1f71bb47-046e-4ba7-b9ae-9cb6bbdb22d3)
+   ![image](https://github.com/user-attachments/assets/4df46d2c-9a10-484d-aae7-81ad4c11cd23)
 
 7. סדרות עם עונות שהושלמו ומספר הפרקים הכולל
-   ![query7](https://github.com/user-attachments/assets/caf970ac-4562-4eb4-b503-8a22d1f742b1)
+   ![image](https://github.com/user-attachments/assets/d974703c-7f3b-499b-af0e-5668d6b37248)
 
 8. כותרים מקוריים ומספר פרסים
-   ![query8](https://github.com/user-attachments/assets/e94f5fbc-6662-4c25-8de8-099d79bfbcec)
+   ![image](https://github.com/user-attachments/assets/8448484e-2b8f-47dd-97d2-117acb21a5a7)
+
 
 ### שאילתות DELETE
 
