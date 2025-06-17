@@ -10,8 +10,8 @@ CREATE TABLE Award
 
 CREATE TABLE Belongs_to
 (
-  Franchise_ID INT NOT NULL,
   Title_ID INT NOT NULL,
+  Franchise_ID INT NOT NULL,
   PRIMARY KEY (Franchise_ID, Title_ID),
   FOREIGN KEY (Franchise_ID) REFERENCES Franchise(Franchise_ID),
   FOREIGN KEY (Title_ID) REFERENCES Title(Title_ID)
