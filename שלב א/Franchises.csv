@@ -1,8 +1,101 @@
-Franchise_ID,Franchise_Name,Number_of_Titles
-1,MCU,40
-2,DCU,30
-3,Star Wars,16
-4,Pixar,16
-5,Disney,15
-6,Gundam,12
-7,Fate,21
+Franchise_ID,Franchise_Name,Number_of_titles
+1,Marvel Universe,15
+2,DC Comics,14
+3,Star Wars,6
+4,Fast & Furious,8
+5,Mission Impossible,10
+6,James Bond,13
+7,Jurassic Park,10
+8,Transformers,15
+9,Pirates of the Caribbean,4
+10,The Matrix,13
+11,Entertainment Franchise 11,7
+12,Entertainment Franchise 12,15
+13,Entertainment Franchise 13,3
+14,Entertainment Franchise 14,5
+15,Entertainment Franchise 15,7
+16,Entertainment Franchise 16,8
+17,Entertainment Franchise 17,15
+18,Entertainment Franchise 18,12
+19,Entertainment Franchise 19,2
+20,Entertainment Franchise 20,14
+21,Entertainment Franchise 21,3
+22,Entertainment Franchise 22,11
+23,Entertainment Franchise 23,9
+24,Entertainment Franchise 24,3
+25,Entertainment Franchise 25,2
+26,Entertainment Franchise 26,11
+27,Entertainment Franchise 27,8
+28,Entertainment Franchise 28,3
+29,Entertainment Franchise 29,4
+30,Entertainment Franchise 30,13
+31,Entertainment Franchise 31,15
+32,Entertainment Franchise 32,8
+33,Entertainment Franchise 33,5
+34,Entertainment Franchise 34,12
+35,Entertainment Franchise 35,13
+36,Entertainment Franchise 36,10
+37,Entertainment Franchise 37,12
+38,Entertainment Franchise 38,8
+39,Entertainment Franchise 39,7
+40,Entertainment Franchise 40,13
+41,Entertainment Franchise 41,8
+42,Entertainment Franchise 42,5
+43,Entertainment Franchise 43,13
+44,Entertainment Franchise 44,10
+45,Entertainment Franchise 45,5
+46,Entertainment Franchise 46,9
+47,Entertainment Franchise 47,8
+48,Entertainment Franchise 48,8
+49,Entertainment Franchise 49,14
+50,Entertainment Franchise 50,15
+51,Entertainment Franchise 51,8
+52,Entertainment Franchise 52,7
+53,Entertainment Franchise 53,11
+54,Entertainment Franchise 54,12
+55,Entertainment Franchise 55,3
+56,Entertainment Franchise 56,6
+57,Entertainment Franchise 57,14
+58,Entertainment Franchise 58,9
+59,Entertainment Franchise 59,13
+60,Entertainment Franchise 60,7
+61,Entertainment Franchise 61,2
+62,Entertainment Franchise 62,7
+63,Entertainment Franchise 63,4
+64,Entertainment Franchise 64,2
+65,Entertainment Franchise 65,2
+66,Entertainment Franchise 66,13
+67,Entertainment Franchise 67,9
+68,Entertainment Franchise 68,6
+69,Entertainment Franchise 69,7
+70,Entertainment Franchise 70,5
+71,Entertainment Franchise 71,2
+72,Entertainment Franchise 72,11
+73,Entertainment Franchise 73,13
+74,Entertainment Franchise 74,5
+75,Entertainment Franchise 75,3
+76,Entertainment Franchise 76,10
+77,Entertainment Franchise 77,15
+78,Entertainment Franchise 78,11
+79,Entertainment Franchise 79,15
+80,Entertainment Franchise 80,10
+81,Entertainment Franchise 81,14
+82,Entertainment Franchise 82,2
+83,Entertainment Franchise 83,7
+84,Entertainment Franchise 84,12
+85,Entertainment Franchise 85,5
+86,Entertainment Franchise 86,2
+87,Entertainment Franchise 87,7
+88,Entertainment Franchise 88,8
+89,Entertainment Franchise 89,2
+90,Entertainment Franchise 90,3
+91,Entertainment Franchise 91,10
+92,Entertainment Franchise 92,8
+93,Entertainment Franchise 93,6
+94,Entertainment Franchise 94,11
+95,Entertainment Franchise 95,11
+96,Entertainment Franchise 96,14
+97,Entertainment Franchise 97,9
+98,Entertainment Franchise 98,15
+99,Entertainment Franchise 99,4
+100,Entertainment Franchise 100,11
