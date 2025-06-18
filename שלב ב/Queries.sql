@@ -56,7 +56,7 @@ JOIN
 GROUP BY
     T.Title_ID, T.Title_Name, TV.number_of_seasons
 HAVING
-    AVG(E.Duration) > 50
+    AVG(E.Duration) > 42
 ORDER BY
     Average_Episode_Duration DESC;
 
@@ -82,22 +82,24 @@ ORDER BY
     Total_Runtime_Minutes ASC;
 
 
--- 5. Selects movies that are a sequel to a TV show
+--5. Finds movie sequels released more than 10 years after the original film.
 SELECT
-    T1.Title_Name AS Movie_Title,
-    T2.Title_Name AS Prequel_TV_Show,
-    M.Release_Date AS Movie_Release_Date,
-    M.Duration AS Movie_Duration
+    Sequel.Title_Name AS Sequel_Name,
+    Original.Title_Name AS Original_Name,
+    SequelMovie.Release_Date AS Sequel_Release_Date,
+    OriginalMovie.Release_Date AS Original_Release_Date
 FROM
-    Title T1
+    Title AS Sequel
 JOIN
-    Movie M ON T1.Title_ID = M.Title_ID
+    Movie AS SequelMovie ON Sequel.Title_ID = SequelMovie.Title_ID
 JOIN
-    Title T2 ON T1.Sequel_ID = T2.Title_ID
+    Title AS Original ON Sequel.Sequel_ID = Original.Title_ID
 JOIN
-    TV_show TV ON T2.Title_ID = TV.Title_ID
+    Movie AS OriginalMovie ON Original.Title_ID = OriginalMovie.Title_ID
+WHERE
+    EXTRACT(YEAR FROM SequelMovie.Release_Date) - EXTRACT(YEAR FROM OriginalMovie.Release_Date) >= 10
 ORDER BY
-    Movie_Release_Date;
+    (EXTRACT(YEAR FROM SequelMovie.Release_Date) - EXTRACT(YEAR FROM OriginalMovie.Release_Date)) DESC;
 
 
 -- 6. Displays a summary for each franchise
@@ -122,24 +124,45 @@ ORDER BY
     Total_Titles DESC, F.Franchise_Name;
 
 
--- 7. Finds TV shows with at least one completed season
+-- 7. Selects the movie with the most awards won for each genre.
+WITH MovieAwardCounts AS (
+    SELECT
+        Title_ID,
+        COUNT(Award_Name) AS Number_Of_Wins
+    FROM
+        Award
+    WHERE
+        Result = 'Won'
+    GROUP BY
+        Title_ID
+),
+RankedMoviesInGenre AS (
+    SELECT
+        G.Genre_Name,
+        T.Title_Name,
+        MAC.Number_Of_Wins,
+        RANK() OVER (PARTITION BY G.Genre_Name ORDER BY MAC.Number_Of_Wins DESC) AS Rank_In_Genre
+    FROM
+        Genre G
+    JOIN
+        MovieGenre MG ON G.Genre_ID = MG.Genre_ID
+    JOIN
+        Title T ON MG.Title_ID = T.Title_ID
+    JOIN
+        MovieAwardCounts MAC ON T.Title_ID = MAC.Title_ID
+    JOIN
+        Movie M ON T.Title_ID = M.Title_ID
+)
 SELECT
-    T.Title_Name,
-    TV.number_of_seasons AS Declared_Total_Seasons,
-    COUNT(DISTINCT S.Season_Number) AS Seasons_In_DB,
-    SUM(S.Number_of_episodes) AS Total_Episodes_In_DB
+    Genre_Name,
+    Title_Name,
+    Number_Of_Wins
 FROM
-    Title T
-JOIN
-    Tv_show TV ON T.Title_ID = TV.Title_ID
-JOIN
-    Season S ON TV.Title_ID = S.Title_ID
+    RankedMoviesInGenre
 WHERE
-    T.Title_ID IN (SELECT DISTINCT S_inner.Title_ID FROM Season S_inner WHERE S_inner.current_Status = 'Completed')
-GROUP BY
-    T.Title_ID, T.Title_Name, TV.number_of_seasons
+    Rank_In_Genre = 1
 ORDER BY
-    Total_Episodes_In_DB DESC, T.Title_Name;
+    Genre_Name ASC;
 
 
 -- 8. Displays titles that are not sequels, sorted by the number of awards won
