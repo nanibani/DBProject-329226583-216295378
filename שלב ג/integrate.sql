@@ -1,160 +1,221 @@
--- Section 1: Creating the New Tables
--- These are the tables you provided that need to be added to your existing schema.
+-- Stage C: Integration Script
+-- Merging the media content schema with the personnel and production schema.
+-- Created: June 2025
 
-CREATE TABLE Agent (
-    AgentID INT PRIMARY KEY,
-    AgentFullName VARCHAR(100),
-    AgencyName VARCHAR(100),
-    PhoneNumber VARCHAR(20),
-    Email VARCHAR(100)
-);
+------------------------------------------------------------
+-- Step 1: Altering existing tables to add relationships
+------------------------------------------------------------
 
-CREATE TABLE Content_Creator (
-    CreatorID INT PRIMARY KEY,
-    Content_CreatorFullName VARCHAR(100),
-    BirthDate DATE,
-    Country VARCHAR(50),
-    IsActive BOOLEAN,
-    JoinDate DATE,
-    AgentID INT,
-    FOREIGN KEY (AgentID) REFERENCES Agent(AgentID)
-);
+-- Add columns to link tables from the different schemas
+ALTER TABLE Title
+ADD COLUMN ProductionID INT;
 
-CREATE TABLE Production (
-    ProductionID INT PRIMARY KEY,
-    Title VARCHAR(100), -- Note: This 'Title' column in Production is a string name, not a foreign key to Title.Title_ID yet.
-    ProductionType VARCHAR(50),
-    ReleaseDate DATE,
-    Genre VARCHAR(50),
-    ProductionRating DECIMAL(3,1)
-);
+ALTER TABLE Title
+ADD COLUMN CreatorID INT;
 
-CREATE TABLE Contract (
-    ContractID INT PRIMARY KEY,
-    CreatorID INT,
-    ProductionID INT,
-    StartDate DATE,
-    EndDate DATE,
-    Payment DECIMAL(10,2),
-    RoleContract VARCHAR(50),
-    FOREIGN KEY (CreatorID) REFERENCES Content_Creator(CreatorID),
-    FOREIGN KEY (ProductionID) REFERENCES Production(ProductionID)
-);
+ALTER TABLE Contract
+ADD COLUMN TitleID INT;
 
--- IMPORTANT: You already have an 'Award' table in your existing schema.
--- The new 'Award' table has a different primary key and structure.
--- To avoid naming conflicts, we will rename this new Award table to 'Creator_Award'
--- to distinguish it as awards specifically for Content_Creators.
-CREATE TABLE Creator_Award (
-    AwardID INT PRIMARY KEY,
-    CreatorID INT,
-    AwardName VARCHAR(100),
+------------------------------------------------------------
+-- Step 2: Creating Foreign Keys for Integration
+------------------------------------------------------------
+
+-- Link Title to Production
+ALTER TABLE Title
+ADD CONSTRAINT FK_Title_Production
+FOREIGN KEY (ProductionID) REFERENCES Production(ProductionID);
+
+-- Link Title to Content_Creator
+ALTER TABLE Title
+ADD CONSTRAINT FK_Title_Creator
+FOREIGN KEY (CreatorID) REFERENCES Content_Creator(CreatorID);
+
+-- Link Contract to a specific Title
+ALTER TABLE Contract
+ADD CONSTRAINT FK_Contract_Title
+FOREIGN KEY (TitleID) REFERENCES Title(Title_ID);
+
+------------------------------------------------------------
+-- Step 3: Create a Unified Awards Table
+------------------------------------------------------------
+
+-- A new table to merge awards from both schemas
+CREATE TABLE Unified_Award (
+    UnifiedAwardID INT PRIMARY KEY,
+    AwardName VARCHAR(100) NOT NULL,
     AwardYear DATE,
+    AwardGivenBy VARCHAR(100),
+    AwardResult VARCHAR(50),
+    TitleID INT,
+    CreatorID INT,
+    AwardCategory VARCHAR(50) DEFAULT 'General',
+    
+    FOREIGN KEY (TitleID) REFERENCES Title(Title_ID),
     FOREIGN KEY (CreatorID) REFERENCES Content_Creator(CreatorID)
 );
 
-CREATE TABLE Feedback (
-    FeedbackID INT PRIMARY KEY,
-    ProductionID INT,
-    FeedbackDate DATE,
-    FeedbackRating DECIMAL(2,1),
-    FeedbackComment TEXT,
-    FOREIGN KEY (ProductionID) REFERENCES Production(ProductionID)
+------------------------------------------------------------
+-- Step 4: Create a Unified Title-Genre Link Table
+------------------------------------------------------------
+
+-- A new linking table to connect all titles (movies and TV shows) to genres
+CREATE TABLE TitleGenre (
+    TitleID INT NOT NULL,
+    GenreID INT NOT NULL,
+    PRIMARY KEY (TitleID, GenreID),
+    FOREIGN KEY (TitleID) REFERENCES Title(Title_ID),
+    FOREIGN KEY (GenreID) REFERENCES Genre(Genre_ID)
 );
 
----
+------------------------------------------------------------
+-- Step 5: Augmenting the Production Table
+------------------------------------------------------------
 
--- Section 2: Establishing Relationships between Existing and New Tables
--- The most logical link is between your existing 'Title' table and the new 'Production' table.
--- We assume that a 'Production' can correspond to a 'Title' in your existing system.
-
--- Add a foreign key column to the Production table to link it to the existing Title table.
--- This allows a 'Production' to be associated with a 'Title' (Movie or TV Show) in your main system.
+-- Add new columns to the Production table to match the unified schema
 ALTER TABLE Production
-ADD COLUMN Title_ID INT;
+ADD COLUMN Age_Rating INT;
 
--- Add the foreign key constraint. We make it nullable in case some productions
--- don't directly map to an existing 'Title' (e.g., internal productions not released yet).
 ALTER TABLE Production
-ADD CONSTRAINT FK_Production_Title_ID
-FOREIGN KEY (Title_ID) REFERENCES Title(Title_ID);
+ADD COLUMN FranchiseID INT;
 
--- 'Award' table can also be given to a Content_Creator,
-ALTER TABLE Award
-ADD COLUMN CreatorID INT;
-ALTER TABLE Award
-ADD CONSTRAINT FK_Award_Creator
-FOREIGN KEY (CreatorID) REFERENCES Content_Creator(CreatorID);
----
-
--- Section 3: Applying Constraints to the New Tables
--- These constraints were specified for the new tables.
-
--- Constraint 1: NOT NULL on Agent.Email
--- Ensure existing NULL values are updated before applying NOT NULL constraint
-UPDATE Agent
-SET Email = 'default@email.com'
-WHERE Email IS NULL;
-ALTER TABLE Agent
-ALTER COLUMN Email SET NOT NULL;
-
--- Constraint 2: CHECK on Production.ProductionRating between 0 and 10
--- Ensure existing values are within range before applying CHECK constraint
-UPDATE Production
-SET ProductionRating = 5.0
-WHERE ProductionRating < 0 OR ProductionRating > 10;
+-- Link Production to a Franchise
 ALTER TABLE Production
-ADD CONSTRAINT chk_ProductionRating
-CHECK (ProductionRating >= 0 AND ProductionRating <= 10);
+ADD CONSTRAINT FK_Production_Franchise
+FOREIGN KEY (FranchiseID) REFERENCES Franchise(Franchise_ID);
 
--- Constraint 3: DEFAULT on Feedback.FeedbackRating
--- Update existing NULLs (though DEFAULT only applies to new inserts without value)
-UPDATE Feedback
-SET FeedbackRating = 5.0
-WHERE FeedbackRating IS NULL;
+------------------------------------------------------------
+-- Step 6: Augmenting the Feedback Table
+------------------------------------------------------------
+
+-- Add a direct link from Feedback to a Title
 ALTER TABLE Feedback
-ALTER COLUMN FeedbackRating SET DEFAULT 5.0;
+ADD COLUMN TitleID INT;
 
--- Constraint 4: CHECK on FeedbackRating between 1 and 10
--- Ensure existing values are within range before applying CHECK constraint
-UPDATE Feedback
-SET FeedbackRating = 5.0
-WHERE FeedbackRating < 1 OR FeedbackRating > 10;
 ALTER TABLE Feedback
-ADD CONSTRAINT chk_FeedbackRating
-CHECK (FeedbackRating >= 1 AND FeedbackRating <= 10);
+ADD CONSTRAINT FK_Feedback_Title
+FOREIGN KEY (TitleID) REFERENCES Title(Title_ID);
 
--- Constraint 5: DEFAULT on Feedback.FeedbackDate
--- Update existing NULLs (though DEFAULT only applies to new inserts without value)
-UPDATE Feedback
-SET FeedbackDate = CURRENT_DATE
-WHERE FeedbackDate IS NULL;
-ALTER TABLE Feedback
-ALTER COLUMN FeedbackDate SET DEFAULT CURRENT_DATE;
+------------------------------------------------------------
+-- Step 7: Create a Content Collaboration Table
+------------------------------------------------------------
 
--- Constraint 6: CHECK on Contract.Payment must be positive
--- Ensure existing values are non-negative before applying CHECK constraint
-UPDATE Contract
-SET Payment = 0
-WHERE Payment < 0;
-ALTER TABLE Contract
-ADD CONSTRAINT chk_PaymentPositive
-CHECK (Payment >= 0);
+-- A new table to describe the work of creators on specific content
+CREATE TABLE Content_Collaboration (
+    CollaborationID INT PRIMARY KEY,
+    CreatorID INT NOT NULL,
+    TitleID INT NOT NULL,
+    Role VARCHAR(100) NOT NULL,
+    SeasonNumber INT NULL,
+    EpisodeNumber INT NULL,
+    StartDate DATE,
+    EndDate DATE,
+    
+    FOREIGN KEY (CreatorID) REFERENCES Content_Creator(CreatorID),
+    FOREIGN KEY (TitleID) REFERENCES Title(Title_ID),
+    FOREIGN KEY (SeasonNumber, TitleID) REFERENCES Season(Season_Number, Title_ID),
+    FOREIGN KEY (EpisodeNumber, SeasonNumber, TitleID) REFERENCES Episode(Episode_Number, Season_Number, Title_ID)
+);
 
--- Constraint 7: CHECK on Contract.EndDate must be after StartDate
--- Ensure existing dates are valid before applying CHECK constraint
-UPDATE Contract
-SET EndDate = StartDate + INTERVAL '30 days' -- Adjust this logic if needed for existing invalid data
-WHERE EndDate <= StartDate;
-ALTER TABLE Contract
-ADD CONSTRAINT chk_ContractDates
-CHECK (EndDate > StartDate);
+------------------------------------------------------------
+-- Step 8: Integrated Constraints
+------------------------------------------------------------
 
--- Constraint 8: CHECK on Creator_Award.AwardYear between 1900 and today
--- Ensure existing values are valid before applying CHECK constraint
-UPDATE Creator_Award
-SET AwardYear = CURRENT_DATE
-WHERE AwardYear < '1900-01-01' OR AwardYear > CURRENT_DATE;
-ALTER TABLE Creator_Award
-ADD CONSTRAINT chk_AwardYear
-CHECK (AwardYear BETWEEN '1900-01-01' AND CURRENT_DATE);
+-- Add a default role for new collaborations
+ALTER TABLE Content_Collaboration
+ALTER COLUMN Role SET DEFAULT 'General Contributor';
+
+-- Add a check constraint for collaboration dates
+ALTER TABLE Content_Collaboration
+ADD CONSTRAINT chk_Collaboration_Dates
+CHECK (EndDate IS NULL OR EndDate >= StartDate);
+
+-- Add a check constraint to ensure an award is associated with a title or a creator
+ALTER TABLE Unified_Award
+ADD CONSTRAINT chk_Award_Association
+CHECK (TitleID IS NOT NULL OR CreatorID IS NOT NULL);
+
+------------------------------------------------------------
+-- Step 9: Data Migration Logic (Example Stubs)
+------------------------------------------------------------
+
+-- NOTE: The following INSERT statements are examples.
+-- They should be adapted based on the existing data and table names after the merge.
+-- It's recommended to rename old tables (e.g., 'ALTER TABLE Award RENAME TO Old_Award;') before migration.
+
+/*
+-- Example migration from an old media-related award table
+INSERT INTO Unified_Award (UnifiedAwardID, AwardName, AwardGivenBy, AwardResult, TitleID, AwardCategory)
+SELECT 
+    ROW_NUMBER() OVER (ORDER BY Award_Name) as UnifiedAwardID,
+    Award_Name,
+    Given_By,
+    Result,
+    Title_ID,
+    'Player Award'
+FROM Old_Media_Award;
+
+-- Example migration from an old creator-related award table
+INSERT INTO Unified_Award (UnifiedAwardID, AwardName, AwardYear, CreatorID, AwardCategory)
+SELECT 
+    (SELECT COALESCE(MAX(UnifiedAwardID), 0) FROM Unified_Award) + ROW_NUMBER() OVER (ORDER BY AwardID) as UnifiedAwardID,
+    AwardName,
+    AwardYear,
+    CreatorID,
+    'Creator Award'
+FROM Old_Creator_Award;
+*/
+
+------------------------------------------------------------
+-- Step 10: Creating Views for easier data access
+------------------------------------------------------------
+
+-- A comprehensive view for all content-related information
+CREATE VIEW Complete_Content_View AS
+SELECT 
+    t.Title_ID,
+    t.Title_Name,
+    t.Age_Rating,
+    p.ProductionType,
+    p.ReleaseDate,
+    p.ProductionRating,
+    cc.Content_CreatorFullName as Creator_Name,
+    a.AgencyName,
+    f.Franchise_Name,
+    STRING_AGG(g.Genre_Name, ', ') as Genres
+FROM Title t
+LEFT JOIN Production p ON t.ProductionID = p.ProductionID
+LEFT JOIN Content_Creator cc ON t.CreatorID = cc.CreatorID
+LEFT JOIN Agent a ON cc.AgentID = a.AgentID
+LEFT JOIN Belongs_to bt ON t.Title_ID = bt.Title_ID
+LEFT JOIN Franchise f ON bt.Franchise_ID = f.Franchise_ID
+LEFT JOIN TitleGenre tg ON t.Title_ID = tg.TitleID
+LEFT JOIN Genre g ON tg.GenreID = g.Genre_ID
+GROUP BY t.Title_ID, t.Title_Name, t.Age_Rating, p.ProductionType, 
+         p.ReleaseDate, p.ProductionRating, cc.Content_CreatorFullName, 
+         a.AgencyName, f.Franchise_Name;
+
+-- A view for the unified awards data
+CREATE VIEW All_Awards_View AS
+SELECT 
+    ua.UnifiedAwardID,
+    ua.AwardName,
+    ua.AwardYear,
+    ua.AwardGivenBy,
+    ua.AwardResult,
+    ua.AwardCategory,
+    t.Title_Name,
+    cc.Content_CreatorFullName as Creator_Name
+FROM Unified_Award ua
+LEFT JOIN Title t ON ua.TitleID = t.Title_ID
+LEFT JOIN Content_Creator cc ON ua.CreatorID = cc.CreatorID;
+
+------------------------------------------------------------
+-- Step 11: Adding Indexes for better performance
+------------------------------------------------------------
+
+-- Indexes on new foreign key columns to speed up joins
+CREATE INDEX idx_title_production ON Title(ProductionID);
+CREATE INDEX idx_title_creator ON Title(CreatorID);
+CREATE INDEX idx_contract_title ON Contract(TitleID);
+CREATE INDEX idx_feedback_title ON Feedback(TitleID);
+CREATE INDEX idx_collaboration_creator_title ON Content_Collaboration(CreatorID, TitleID);
