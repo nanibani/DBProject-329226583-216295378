@@ -91,14 +91,15 @@
 4. סדרות עם זמן שידור כולל מתחת ל־5 שעות
    ![image](https://github.com/user-attachments/assets/4a9108e5-431f-4288-b117-b881f5cf329f)
 
-5. סרטים עם סדרות המשך
-   ![image](https://github.com/user-attachments/assets/45717856-8414-4b4b-beb6-159de549b40c)
+5. איתור סרטי המשך עם פער זמן גדול מהסרט המקורי
+
+![Screenshot 2025-06-18 121604](https://github.com/user-attachments/assets/d3656337-2220-4fc9-b3ad-651932346adc)
 
 6. ניתוח זכיינויות: סרטים לעומת סדרות
    ![image](https://github.com/user-attachments/assets/4df46d2c-9a10-484d-aae7-81ad4c11cd23)
 
-7. סדרות עם עונות שהושלמו ומספר הפרקים הכולל
-   ![image](https://github.com/user-attachments/assets/d974703c-7f3b-499b-af0e-5668d6b37248)
+7.הסרט שזכה במרב הפרסים בכל ז'אנר
+   ![image](https://github.com/user-attachments/assets/ebda9a3d-56cb-44fe-b8f9-7eec047b3413)
 
 8. כותרים מקוריים ומספר פרסים
    ![image](https://github.com/user-attachments/assets/8448484e-2b8f-47dd-97d2-117acb21a5a7)
