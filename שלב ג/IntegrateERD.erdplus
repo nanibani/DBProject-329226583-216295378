@@ -1,1 +1,1804 @@
-{"version":2,"www":"erdplus.com","shapes":[ {"type":"Entity","details":{"name":"Title","type":"regular","x":600,"y":200,"isDisjointed":false,"isTotalSpecialization":false,"isSubtype":false,"supertypeEntityId":null,"id":1}}, {"type":"Attribute","details":{"name":"Title_ID","isDerived":false,"isMultivalued":false,"isOptional":false,"isComposite":false,"isUnique":true,"x":500,"y":150,"id":2}}, {"type":"Attribute","details":{"name":"Title_Name","isDerived":false,"isMultivalued":false,"isOptional":false,"isComposite":false,"isUnique":false,"x":700,"y":150,"id":3}}, {"type":"Attribute","details":{"name":"Age_Rating","isDerived":false,"isMultivalued":false,"isOptional":false,"isComposite":false,"isUnique":false,"x":750,"y":200,"id":4}}, {"type":"Attribute","details":{"name":"Sequel_ID","isDerived":false,"isMultivalued":false,"isOptional":true,"isComposite":false,"isUnique":false,"x":700,"y":250,"id":5
+{
+  "version": 2,
+  "www": "erdplus.com",
+  "shapes": [
+    {
+      "type": "Entity",
+      "details": {
+        "name": "Feedback",
+        "type": "regular",
+        "x": 750,
+        "y": 600,
+        "isDisjointed": true,
+        "isTotalSpecialization": true,
+        "isSubtype": false,
+        "supertypeEntityId": null,
+        "id": 67
+      }
+    },
+    {
+      "type": "Attribute",
+      "details": {
+        "name": "FeedbackID",
+        "isDerived": false,
+        "isMultivalued": false,
+        "isOptional": false,
+        "isComposite": false,
+        "isUnique": true,
+        "x": 650,
+        "y": 550,
+        "id": 68
+      }
+    },
+    {
+      "type": "Attribute",
+      "details": {
+        "name": "FeedbackDate",
+        "isDerived": false,
+        "isMultivalued": false,
+        "isOptional": false,
+        "isComposite": false,
+        "isUnique": false,
+        "x": 650,
+        "y": 600,
+        "id": 69
+      }
+    },
+    {
+      "type": "Attribute",
+      "details": {
+        "name": "FeedbackRating",
+        "isDerived": false,
+        "isMultivalued": false,
+        "isOptional": false,
+        "isComposite": false,
+        "isUnique": false,
+        "x": 650,
+        "y": 650,
+        "id": 70
+      }
+    },
+    {
+      "type": "Attribute",
+      "details": {
+        "name": "FeedbackComment",
+        "isDerived": false,
+        "isMultivalued": false,
+        "isOptional": false,
+        "isComposite": false,
+        "isUnique": false,
+        "x": 850,
+        "y": 650,
+        "id": 71
+      }
+    },
+    {
+      "type": "Relationship",
+      "details": {
+        "name": "Title_Feedback",
+        "isIdentifying": false,
+        "x": 750,
+        "y": 450,
+        "slots": [
+          {
+            "slotIndex": 0,
+            "minimum": "",
+            "maximum": "",
+            "participation": "mandatory",
+            "cardinality": "one",
+            "role": "",
+            "entityId": 15
+          },
+          {
+            "slotIndex": 1,
+            "minimum": "",
+            "maximum": "",
+            "participation": "optional",
+            "cardinality": "many",
+            "role": "",
+            "entityId": 67
+          }
+        ],
+        "id": 72
+      }
+    }
+  ],
+  "connectors": [
+    {
+      "type": "Connector",
+      "details": {
+        "id": 100
+      },
+      "source": 2,
+      "destination": 1
+    },
+    {
+      "type": "Connector",
+      "details": {
+        "id": 101
+      },
+      "source": 3,
+      "destination": 1
+    },
+    {
+      "type": "Connector",
+      "details": {
+        "id": 102
+      },
+      "source": 4,
+      "destination": 1
+    },
+    {
+      "type": "Connector",
+      "details": {
+        "id": 103
+      },
+      "source": 5,
+      "destination": 1
+    },
+    {
+      "type": "Connector",
+      "details": {
+        "id": 104
+      },
+      "source": 6,
+      "destination": 1
+    },
+    {
+      "type": "Connector",
+      "details": {
+        "id": 105
+      },
+      "source": 8,
+      "destination": 7
+    },
+    {
+      "type": "Connector",
+      "details": {
+        "id": 106
+      },
+      "source": 9,
+      "destination": 7
+    },
+    {
+      "type": "Connector",
+      "details": {
+        "id": 107
+      },
+      "source": 10,
+      "destination": 7
+    },
+    {
+      "type": "Connector",
+      "details": {
+        "id": 108
+      },
+      "source": 11,
+      "destination": 7
+    },
+    {
+      "type": "Connector",
+      "details": {
+        "id": 109
+      },
+      "source": 12,
+      "destination": 7
+    },
+    {
+      "type": "Connector",
+      "details": {
+        "id": 110
+      },
+      "source": 13,
+      "destination": 7
+    },
+    {
+      "type": "RelationshipConnector",
+      "details": {
+        "slotIndex": 0,
+        "id": 111
+      },
+      "source": 1,
+      "destination": 14
+    },
+    {
+      "type": "RelationshipConnector",
+      "details": {
+        "slotIndex": 1,
+        "id": 112
+      },
+      "source": 7,
+      "destination": 14
+    },
+    {
+      "type": "Connector",
+      "details": {
+        "id": 113
+      },
+      "source": 16,
+      "destination": 15
+    },
+    {
+      "type": "Connector",
+      "details": {
+        "id": 114
+      },
+      "source": 17,
+      "destination": 15
+    },
+    {
+      "type": "Connector",
+      "details": {
+        "id": 115
+      },
+      "source": 18,
+      "destination": 15
+    },
+    {
+      "type": "Connector",
+      "details": {
+        "id": 116
+      },
+      "source": 19,
+      "destination": 15
+    },
+    {
+      "type": "Connector",
+      "details": {
+        "isSupertypeConnector": true,
+        "id": 117
+      },
+      "source": 20,
+      "destination": 15
+    },
+    {
+      "type": "Connector",
+      "details": {
+        "id": 118
+      },
+      "source": 21,
+      "destination": 20
+    },
+    {
+      "type": "Connector",
+      "details": {
+        "id": 119
+      },
+      "source": 22,
+      "destination": 20
+    },
+    {
+      "type": "Connector",
+      "details": {
+        "id": 120
+      },
+      "source": 23,
+      "destination": 20
+    },
+    {
+      "type": "Connector",
+      "details": {
+        "isSupertypeConnector": true,
+        "id": 121
+      },
+      "source": 24,
+      "destination": 15
+    },
+    {
+      "type": "Connector",
+      "details": {
+        "id": 122
+      },
+      "source": 25,
+      "destination": 24
+    },
+    {
+      "type": "Connector",
+      "details": {
+        "id": 123
+      },
+      "source": 27,
+      "destination": 26
+    },
+    {
+      "type": "Connector",
+      "details": {
+        "id": 124
+      },
+      "source": 28,
+      "destination": 26
+    },
+    {
+      "type": "Connector",
+      "details": {
+        "id": 125
+      },
+      "source": 29,
+      "destination": 26
+    },
+    {
+      "type": "RelationshipConnector",
+      "details": {
+        "slotIndex": 0,
+        "id": 126
+      },
+      "source": 24,
+      "destination": 30
+    },
+    {
+      "type": "RelationshipConnector",
+      "details": {
+        "slotIndex": 1,
+        "id": 127
+      },
+      "source": 26,
+      "destination": 30
+    },
+    {
+      "type": "Connector",
+      "details": {
+        "id": 128
+      },
+      "source": 32,
+      "destination": 31
+    },
+    {
+      "type": "Connector",
+      "details": {
+        "id": 129
+      },
+      "source": 33,
+      "destination": 31
+    },
+    {
+      "type": "Connector",
+      "details": {
+        "id": 130
+      },
+      "source": 34,
+      "destination": 31
+    },
+    {
+      "type": "RelationshipConnector",
+      "details": {
+        "slotIndex": 0,
+        "id": 131
+      },
+      "source": 26,
+      "destination": 35
+    },
+    {
+      "type": "RelationshipConnector",
+      "details": {
+        "slotIndex": 1,
+        "id": 132
+      },
+      "source": 31,
+      "destination": 35
+    },
+    {
+      "type": "Connector",
+      "details": {
+        "id": 133
+      },
+      "source": 37,
+      "destination": 36
+    },
+    {
+      "type": "Connector",
+      "details": {
+        "id": 134
+      },
+      "source": 38,
+      "destination": 36
+    },
+    {
+      "type": "RelationshipConnector",
+      "details": {
+        "slotIndex": 0,
+        "id": 135
+      },
+      "source": 36,
+      "destination": 40
+    },
+    {
+      "type": "RelationshipConnector",
+      "details": {
+        "slotIndex": 1,
+        "id": 136
+      },
+      "source": 39,
+      "destination": 40
+    },
+    {
+      "type": "RelationshipConnector",
+      "details": {
+        "slotIndex": 0,
+        "id": 137
+      },
+      "source": 39,
+      "destination": 41
+    },
+    {
+      "type": "RelationshipConnector",
+      "details": {
+        "slotIndex": 1,
+        "id": 138
+      },
+      "source": 15,
+      "destination": 41
+    },
+    {
+      "type": "Connector",
+      "details": {
+        "id": 139
+      },
+      "source": 43,
+      "destination": 42
+    },
+    {
+      "type": "Connector",
+      "details": {
+        "id": 140
+      },
+      "source": 44,
+      "destination": 42
+    },
+    {
+      "type": "Connector",
+      "details": {
+        "id": 141
+      },
+      "source": 45,
+      "destination": 42
+    },
+    {
+      "type": "RelationshipConnector",
+      "details": {
+        "slotIndex": 0,
+        "id": 142
+      },
+      "source": 42,
+      "destination": 47
+    },
+    {
+      "type": "RelationshipConnector",
+      "details": {
+        "slotIndex": 1,
+        "id": 143
+      },
+      "source": 46,
+      "destination": 47
+    },
+    {
+      "type": "RelationshipConnector",
+      "details": {
+        "slotIndex": 0,
+        "id": 144
+      },
+      "source": 46,
+      "destination": 48
+    },
+    {
+      "type": "RelationshipConnector",
+      "details": {
+        "slotIndex": 1,
+        "id": 145
+      },
+      "source": 15,
+      "destination": 48
+    },
+    {
+      "type": "Connector",
+      "details": {
+        "id": 146
+      },
+      "source": 50,
+      "destination": 49
+    },
+    {
+      "type": "Connector",
+      "details": {
+        "id": 147
+      },
+      "source": 51,
+      "destination": 49
+    },
+    {
+      "type": "Connector",
+      "details": {
+        "id": 148
+      },
+      "source": 52,
+      "destination": 49
+    },
+    {
+      "type": "Connector",
+      "details": {
+        "id": 149
+      },
+      "source": 53,
+      "destination": 49
+    },
+    {
+      "type": "Connector",
+      "details": {
+        "id": 150
+      },
+      "source": 54,
+      "destination": 49
+    },
+    {
+      "type": "RelationshipConnector",
+      "details": {
+        "slotIndex": 0,
+        "id": 151
+      },
+      "source": 7,
+      "destination": 55
+    },
+    {
+      "type": "RelationshipConnector",
+      "details": {
+        "slotIndex": 1,
+        "id": 152
+      },
+      "source": 49,
+      "destination": 55
+    },
+    {
+      "type": "RelationshipConnector",
+      "details": {
+        "slotIndex": 0,
+        "id": 153
+      },
+      "source": 15,
+      "destination": 56
+    },
+    {
+      "type": "RelationshipConnector",
+      "details": {
+        "slotIndex": 1,
+        "id": 154
+      },
+      "source": 49,
+      "destination": 56
+    },
+    {
+      "type": "Connector",
+      "details": {
+        "id": 155
+      },
+      "source": 58,
+      "destination": 57
+    },
+    {
+      "type": "Connector",
+      "details": {
+        "id": 156
+      },
+      "source": 59,
+      "destination": 57
+    },
+    {
+      "type": "Connector",
+      "details": {
+        "id": 157
+      },
+      "source": 60,
+      "destination": 57
+    },
+    {
+      "type": "RelationshipConnector",
+      "details": {
+        "slotIndex": 0,
+        "id": 158
+      },
+      "source": 7,
+      "destination": 61
+    },
+    {
+      "type": "RelationshipConnector",
+      "details": {
+        "slotIndex": 1,
+        "id": 159
+      },
+      "source": 57,
+      "destination": 61
+    },
+    {
+      "type": "Connector",
+      "details": {
+        "id": 160
+      },
+      "source": 63,
+      "destination": 62
+    },
+    {
+      "type": "Connector",
+      "details": {
+        "id": 161
+      },
+      "source": 64,
+      "destination": 62
+    },
+    {
+      "type": "Connector",
+      "details": {
+        "id": 162
+      },
+      "source": 65,
+      "destination": 62
+    },
+    {
+      "type": "RelationshipConnector",
+      "details": {
+        "slotIndex": 0,
+        "id": 163
+      },
+      "source": 15,
+      "destination": 66
+    },
+    {
+      "type": "RelationshipConnector",
+      "details": {
+        "slotIndex": 1,
+        "id": 164
+      },
+      "source": 62,
+      "destination": 66
+    },
+    {
+      "type": "Connector",
+      "details": {
+        "id": 165
+      },
+      "source": 68,
+      "destination": 67
+    },
+    {
+      "type": "Connector",
+      "details": {
+        "id": 166
+      },
+      "source": 69,
+      "destination": 67
+    },
+    {
+      "type": "Connector",
+      "details": {
+        "id": 167
+      },
+      "source": 70,
+      "destination": 67
+    },
+    {
+      "type": "Connector",
+      "details": {
+        "id": 168
+      },
+      "source": 71,
+      "destination": 67
+    },
+    {
+      "type": "RelationshipConnector",
+      "details": {
+        "slotIndex": 0,
+        "id": 169
+      },
+      "source": 15,
+      "destination": 72
+    },
+    {
+      "type": "RelationshipConnector",
+      "details": {
+        "slotIndex": 1,
+        "id": 170
+      },
+      "source": 67,
+      "destination": 72
+    }
+  ],
+  "width": 1500,
+  "height": 800
+}Entity",
+      "details": {
+        "name": "Agent",
+        "type": "regular",
+        "x": 150,
+        "y": 150,
+        "isDisjointed": true,
+        "isTotalSpecialization": true,
+        "isSubtype": false,
+        "supertypeEntityId": null,
+        "id": 1
+      }
+    },
+    {
+      "type": "Attribute",
+      "details": {
+        "name": "AgentID",
+        "isDerived": false,
+        "isMultivalued": false,
+        "isOptional": false,
+        "isComposite": false,
+        "isUnique": true,
+        "x": 50,
+        "y": 100,
+        "id": 2
+      }
+    },
+    {
+      "type": "Attribute",
+      "details": {
+        "name": "AgentFullName",
+        "isDerived": false,
+        "isMultivalued": false,
+        "isOptional": false,
+        "isComposite": false,
+        "isUnique": false,
+        "x": 50,
+        "y": 150,
+        "id": 3
+      }
+    },
+    {
+      "type": "Attribute",
+      "details": {
+        "name": "AgencyName",
+        "isDerived": false,
+        "isMultivalued": false,
+        "isOptional": false,
+        "isComposite": false,
+        "isUnique": false,
+        "x": 50,
+        "y": 200,
+        "id": 4
+      }
+    },
+    {
+      "type": "Attribute",
+      "details": {
+        "name": "PhoneNumber",
+        "isDerived": false,
+        "isMultivalued": false,
+        "isOptional": false,
+        "isComposite": false,
+        "isUnique": false,
+        "x": 250,
+        "y": 100,
+        "id": 5
+      }
+    },
+    {
+      "type": "Attribute",
+      "details": {
+        "name": "Email",
+        "isDerived": false,
+        "isMultivalued": false,
+        "isOptional": false,
+        "isComposite": false,
+        "isUnique": false,
+        "x": 250,
+        "y": 200,
+        "id": 6
+      }
+    },
+    {
+      "type": "Entity",
+      "details": {
+        "name": "Content_Creator",
+        "type": "regular",
+        "x": 450,
+        "y": 150,
+        "isDisjointed": true,
+        "isTotalSpecialization": true,
+        "isSubtype": false,
+        "supertypeEntityId": null,
+        "id": 7
+      }
+    },
+    {
+      "type": "Attribute",
+      "details": {
+        "name": "CreatorID",
+        "isDerived": false,
+        "isMultivalued": false,
+        "isOptional": false,
+        "isComposite": false,
+        "isUnique": true,
+        "x": 350,
+        "y": 100,
+        "id": 8
+      }
+    },
+    {
+      "type": "Attribute",
+      "details": {
+        "name": "Content_CreatorFullName",
+        "isDerived": false,
+        "isMultivalued": false,
+        "isOptional": false,
+        "isComposite": false,
+        "isUnique": false,
+        "x": 350,
+        "y": 150,
+        "id": 9
+      }
+    },
+    {
+      "type": "Attribute",
+      "details": {
+        "name": "BirthDate",
+        "isDerived": false,
+        "isMultivalued": false,
+        "isOptional": false,
+        "isComposite": false,
+        "isUnique": false,
+        "x": 350,
+        "y": 200,
+        "id": 10
+      }
+    },
+    {
+      "type": "Attribute",
+      "details": {
+        "name": "Country",
+        "isDerived": false,
+        "isMultivalued": false,
+        "isOptional": false,
+        "isComposite": false,
+        "isUnique": false,
+        "x": 550,
+        "y": 100,
+        "id": 11
+      }
+    },
+    {
+      "type": "Attribute",
+      "details": {
+        "name": "IsActive",
+        "isDerived": false,
+        "isMultivalued": false,
+        "isOptional": false,
+        "isComposite": false,
+        "isUnique": false,
+        "x": 550,
+        "y": 150,
+        "id": 12
+      }
+    },
+    {
+      "type": "Attribute",
+      "details": {
+        "name": "JoinDate",
+        "isDerived": false,
+        "isMultivalued": false,
+        "isOptional": false,
+        "isComposite": false,
+        "isUnique": false,
+        "x": 550,
+        "y": 200,
+        "id": 13
+      }
+    },
+    {
+      "type": "Relationship",
+      "details": {
+        "name": "Represents",
+        "isIdentifying": false,
+        "x": 300,
+        "y": 150,
+        "slots": [
+          {
+            "slotIndex": 0,
+            "minimum": "",
+            "maximum": "",
+            "participation": "optional",
+            "cardinality": "one",
+            "role": "",
+            "entityId": 1
+          },
+          {
+            "slotIndex": 1,
+            "minimum": "",
+            "maximum": "",
+            "participation": "optional",
+            "cardinality": "many",
+            "role": "",
+            "entityId": 7
+          }
+        ],
+        "id": 14
+      }
+    },
+    {
+      "type": "Entity",
+      "details": {
+        "name": "Title",
+        "type": "super",
+        "x": 750,
+        "y": 300,
+        "isDisjointed": true,
+        "isTotalSpecialization": true,
+        "isSubtype": false,
+        "supertypeEntityId": null,
+        "id": 15
+      }
+    },
+    {
+      "type": "Attribute",
+      "details": {
+        "name": "Title_ID",
+        "isDerived": false,
+        "isMultivalued": false,
+        "isOptional": false,
+        "isComposite": false,
+        "isUnique": true,
+        "x": 650,
+        "y": 250,
+        "id": 16
+      }
+    },
+    {
+      "type": "Attribute",
+      "details": {
+        "name": "Title_Name",
+        "isDerived": false,
+        "isMultivalued": false,
+        "isOptional": false,
+        "isComposite": false,
+        "isUnique": false,
+        "x": 650,
+        "y": 300,
+        "id": 17
+      }
+    },
+    {
+      "type": "Attribute",
+      "details": {
+        "name": "Age_Rating",
+        "isDerived": false,
+        "isMultivalued": false,
+        "isOptional": false,
+        "isComposite": false,
+        "isUnique": false,
+        "x": 650,
+        "y": 350,
+        "id": 18
+      }
+    },
+    {
+      "type": "Attribute",
+      "details": {
+        "name": "Sequel_ID",
+        "isDerived": false,
+        "isMultivalued": false,
+        "isOptional": true,
+        "isComposite": false,
+        "isUnique": false,
+        "x": 850,
+        "y": 250,
+        "id": 19
+      }
+    },
+    {
+      "type": "Entity",
+      "details": {
+        "name": "Movie",
+        "type": "regular",
+        "x": 600,
+        "y": 450,
+        "isDisjointed": true,
+        "isTotalSpecialization": true,
+        "isSubtype": true,
+        "supertypeEntityId": 15,
+        "id": 20
+      }
+    },
+    {
+      "type": "Attribute",
+      "details": {
+        "name": "Release_Date",
+        "isDerived": false,
+        "isMultivalued": false,
+        "isOptional": false,
+        "isComposite": false,
+        "isUnique": false,
+        "x": 500,
+        "y": 400,
+        "id": 21
+      }
+    },
+    {
+      "type": "Attribute",
+      "details": {
+        "name": "Duration",
+        "isDerived": false,
+        "isMultivalued": false,
+        "isOptional": false,
+        "isComposite": false,
+        "isUnique": false,
+        "x": 500,
+        "y": 450,
+        "id": 22
+      }
+    },
+    {
+      "type": "Attribute",
+      "details": {
+        "name": "Movie_Type",
+        "isDerived": false,
+        "isMultivalued": false,
+        "isOptional": false,
+        "isComposite": false,
+        "isUnique": false,
+        "x": 500,
+        "y": 500,
+        "id": 23
+      }
+    },
+    {
+      "type": "Entity",
+      "details": {
+        "name": "Tv_show",
+        "type": "regular",
+        "x": 900,
+        "y": 450,
+        "isDisjointed": true,
+        "isTotalSpecialization": true,
+        "isSubtype": true,
+        "supertypeEntityId": 15,
+        "id": 24
+      }
+    },
+    {
+      "type": "Attribute",
+      "details": {
+        "name": "number_of_seasons",
+        "isDerived": false,
+        "isMultivalued": false,
+        "isOptional": false,
+        "isComposite": false,
+        "isUnique": false,
+        "x": 800,
+        "y": 500,
+        "id": 25
+      }
+    },
+    {
+      "type": "Entity",
+      "details": {
+        "name": "Season",
+        "type": "weak",
+        "x": 1100,
+        "y": 450,
+        "isDisjointed": true,
+        "isTotalSpecialization": true,
+        "isSubtype": false,
+        "supertypeEntityId": null,
+        "id": 26
+      }
+    },
+    {
+      "type": "Attribute",
+      "details": {
+        "name": "Season_Number",
+        "isDerived": false,
+        "isMultivalued": false,
+        "isOptional": false,
+        "isComposite": false,
+        "isUnique": true,
+        "x": 1000,
+        "y": 400,
+        "id": 27
+      }
+    },
+    {
+      "type": "Attribute",
+      "details": {
+        "name": "Number_of_episodes",
+        "isDerived": false,
+        "isMultivalued": false,
+        "isOptional": false,
+        "isComposite": false,
+        "isUnique": false,
+        "x": 1000,
+        "y": 450,
+        "id": 28
+      }
+    },
+    {
+      "type": "Attribute",
+      "details": {
+        "name": "current_Status",
+        "isDerived": false,
+        "isMultivalued": false,
+        "isOptional": false,
+        "isComposite": false,
+        "isUnique": false,
+        "x": 1000,
+        "y": 500,
+        "id": 29
+      }
+    },
+    {
+      "type": "Relationship",
+      "details": {
+        "name": "Has_Season",
+        "isIdentifying": true,
+        "x": 1000,
+        "y": 450,
+        "slots": [
+          {
+            "slotIndex": 0,
+            "minimum": "",
+            "maximum": "",
+            "participation": "mandatory",
+            "cardinality": "one",
+            "role": "",
+            "entityId": 24
+          },
+          {
+            "slotIndex": 1,
+            "minimum": "",
+            "maximum": "",
+            "participation": "mandatory",
+            "cardinality": "many",
+            "role": "",
+            "entityId": 26
+          }
+        ],
+        "id": 30
+      }
+    },
+    {
+      "type": "Entity",
+      "details": {
+        "name": "Episode",
+        "type": "weak",
+        "x": 1300,
+        "y": 450,
+        "isDisjointed": true,
+        "isTotalSpecialization": true,
+        "isSubtype": false,
+        "supertypeEntityId": null,
+        "id": 31
+      }
+    },
+    {
+      "type": "Attribute",
+      "details": {
+        "name": "Episode_Number",
+        "isDerived": false,
+        "isMultivalued": false,
+        "isOptional": false,
+        "isComposite": false,
+        "isUnique": true,
+        "x": 1200,
+        "y": 400,
+        "id": 32
+      }
+    },
+    {
+      "type": "Attribute",
+      "details": {
+        "name": "Duration",
+        "isDerived": false,
+        "isMultivalued": false,
+        "isOptional": false,
+        "isComposite": false,
+        "isUnique": false,
+        "x": 1200,
+        "y": 450,
+        "id": 33
+      }
+    },
+    {
+      "type": "Attribute",
+      "details": {
+        "name": "Date_Aired",
+        "isDerived": false,
+        "isMultivalued": false,
+        "isOptional": false,
+        "isComposite": false,
+        "isUnique": false,
+        "x": 1200,
+        "y": 500,
+        "id": 34
+      }
+    },
+    {
+      "type": "Relationship",
+      "details": {
+        "name": "Has_Episode",
+        "isIdentifying": true,
+        "x": 1200,
+        "y": 450,
+        "slots": [
+          {
+            "slotIndex": 0,
+            "minimum": "",
+            "maximum": "",
+            "participation": "mandatory",
+            "cardinality": "one",
+            "role": "",
+            "entityId": 26
+          },
+          {
+            "slotIndex": 1,
+            "minimum": "",
+            "maximum": "",
+            "participation": "mandatory",
+            "cardinality": "many",
+            "role": "",
+            "entityId": 31
+          }
+        ],
+        "id": 35
+      }
+    },
+    {
+      "type": "Entity",
+      "details": {
+        "name": "Genre",
+        "type": "regular",
+        "x": 450,
+        "y": 300,
+        "isDisjointed": true,
+        "isTotalSpecialization": true,
+        "isSubtype": false,
+        "supertypeEntityId": null,
+        "id": 36
+      }
+    },
+    {
+      "type": "Attribute",
+      "details": {
+        "name": "Genre_ID",
+        "isDerived": false,
+        "isMultivalued": false,
+        "isOptional": false,
+        "isComposite": false,
+        "isUnique": true,
+        "x": 350,
+        "y": 250,
+        "id": 37
+      }
+    },
+    {
+      "type": "Attribute",
+      "details": {
+        "name": "Genre_Name",
+        "isDerived": false,
+        "isMultivalued": false,
+        "isOptional": false,
+        "isComposite": false,
+        "isUnique": false,
+        "x": 350,
+        "y": 350,
+        "id": 38
+      }
+    },
+    {
+      "type": "Entity",
+      "details": {
+        "name": "MovieGenre",
+        "type": "associative",
+        "x": 600,
+        "y": 300,
+        "isDisjointed": true,
+        "isTotalSpecialization": true,
+        "isSubtype": false,
+        "supertypeEntityId": null,
+        "id": 39
+      }
+    },
+    {
+      "type": "Relationship",
+      "details": {
+        "name": "Movie_Has_Genre",
+        "isIdentifying": false,
+        "x": 525,
+        "y": 300,
+        "slots": [
+          {
+            "slotIndex": 0,
+            "minimum": "",
+            "maximum": "",
+            "participation": "mandatory",
+            "cardinality": "many",
+            "role": "",
+            "entityId": 36
+          },
+          {
+            "slotIndex": 1,
+            "minimum": "",
+            "maximum": "",
+            "participation": "mandatory",
+            "cardinality": "one",
+            "role": "",
+            "entityId": 39
+          }
+        ],
+        "id": 40
+      }
+    },
+    {
+      "type": "Relationship",
+      "details": {
+        "name": "Title_Has_Genre",
+        "isIdentifying": false,
+        "x": 675,
+        "y": 300,
+        "slots": [
+          {
+            "slotIndex": 0,
+            "minimum": "",
+            "maximum": "",
+            "participation": "mandatory",
+            "cardinality": "one",
+            "role": "",
+            "entityId": 39
+          },
+          {
+            "slotIndex": 1,
+            "minimum": "",
+            "maximum": "",
+            "participation": "mandatory",
+            "cardinality": "many",
+            "role": "",
+            "entityId": 15
+          }
+        ],
+        "id": 41
+      }
+    },
+    {
+      "type": "Entity",
+      "details": {
+        "name": "Franchise",
+        "type": "regular",
+        "x": 950,
+        "y": 150,
+        "isDisjointed": true,
+        "isTotalSpecialization": true,
+        "isSubtype": false,
+        "supertypeEntityId": null,
+        "id": 42
+      }
+    },
+    {
+      "type": "Attribute",
+      "details": {
+        "name": "Franchise_ID",
+        "isDerived": false,
+        "isMultivalued": false,
+        "isOptional": false,
+        "isComposite": false,
+        "isUnique": true,
+        "x": 850,
+        "y": 100,
+        "id": 43
+      }
+    },
+    {
+      "type": "Attribute",
+      "details": {
+        "name": "Franchise_Name",
+        "isDerived": false,
+        "isMultivalued": false,
+        "isOptional": false,
+        "isComposite": false,
+        "isUnique": false,
+        "x": 850,
+        "y": 150,
+        "id": 44
+      }
+    },
+    {
+      "type": "Attribute",
+      "details": {
+        "name": "Number_of_titles",
+        "isDerived": false,
+        "isMultivalued": false,
+        "isOptional": false,
+        "isComposite": false,
+        "isUnique": false,
+        "x": 850,
+        "y": 200,
+        "id": 45
+      }
+    },
+    {
+      "type": "Entity",
+      "details": {
+        "name": "Belongs_to",
+        "type": "associative",
+        "x": 850,
+        "y": 225,
+        "isDisjointed": true,
+        "isTotalSpecialization": true,
+        "isSubtype": false,
+        "supertypeEntityId": null,
+        "id": 46
+      }
+    },
+    {
+      "type": "Relationship",
+      "details": {
+        "name": "Franchise_Has_Title",
+        "isIdentifying": false,
+        "x": 900,
+        "y": 187,
+        "slots": [
+          {
+            "slotIndex": 0,
+            "minimum": "",
+            "maximum": "",
+            "participation": "mandatory",
+            "cardinality": "many",
+            "role": "",
+            "entityId": 42
+          },
+          {
+            "slotIndex": 1,
+            "minimum": "",
+            "maximum": "",
+            "participation": "mandatory",
+            "cardinality": "one",
+            "role": "",
+            "entityId": 46
+          }
+        ],
+        "id": 47
+      }
+    },
+    {
+      "type": "Relationship",
+      "details": {
+        "name": "Title_Belongs_To",
+        "isIdentifying": false,
+        "x": 800,
+        "y": 262,
+        "slots": [
+          {
+            "slotIndex": 0,
+            "minimum": "",
+            "maximum": "",
+            "participation": "mandatory",
+            "cardinality": "one",
+            "role": "",
+            "entityId": 46
+          },
+          {
+            "slotIndex": 1,
+            "minimum": "",
+            "maximum": "",
+            "participation": "optional",
+            "cardinality": "many",
+            "role": "",
+            "entityId": 15
+          }
+        ],
+        "id": 48
+      }
+    },
+    {
+      "type": "Entity",
+      "details": {
+        "name": "Contract",
+        "type": "regular",
+        "x": 450,
+        "y": 600,
+        "isDisjointed": true,
+        "isTotalSpecialization": true,
+        "isSubtype": false,
+        "supertypeEntityId": null,
+        "id": 49
+      }
+    },
+    {
+      "type": "Attribute",
+      "details": {
+        "name": "ContractID",
+        "isDerived": false,
+        "isMultivalued": false,
+        "isOptional": false,
+        "isComposite": false,
+        "isUnique": true,
+        "x": 350,
+        "y": 550,
+        "id": 50
+      }
+    },
+    {
+      "type": "Attribute",
+      "details": {
+        "name": "StartDate",
+        "isDerived": false,
+        "isMultivalued": false,
+        "isOptional": false,
+        "isComposite": false,
+        "isUnique": false,
+        "x": 350,
+        "y": 600,
+        "id": 51
+      }
+    },
+    {
+      "type": "Attribute",
+      "details": {
+        "name": "EndDate",
+        "isDerived": false,
+        "isMultivalued": false,
+        "isOptional": false,
+        "isComposite": false,
+        "isUnique": false,
+        "x": 350,
+        "y": 650,
+        "id": 52
+      }
+    },
+    {
+      "type": "Attribute",
+      "details": {
+        "name": "Payment",
+        "isDerived": false,
+        "isMultivalued": false,
+        "isOptional": false,
+        "isComposite": false,
+        "isUnique": false,
+        "x": 550,
+        "y": 550,
+        "id": 53
+      }
+    },
+    {
+      "type": "Attribute",
+      "details": {
+        "name": "RoleContract",
+        "isDerived": false,
+        "isMultivalued": false,
+        "isOptional": false,
+        "isComposite": false,
+        "isUnique": false,
+        "x": 550,
+        "y": 650,
+        "id": 54
+      }
+    },
+    {
+      "type": "Relationship",
+      "details": {
+        "name": "Creator_Contract",
+        "isIdentifying": false,
+        "x": 450,
+        "y": 375,
+        "slots": [
+          {
+            "slotIndex": 0,
+            "minimum": "",
+            "maximum": "",
+            "participation": "mandatory",
+            "cardinality": "one",
+            "role": "",
+            "entityId": 7
+          },
+          {
+            "slotIndex": 1,
+            "minimum": "",
+            "maximum": "",
+            "participation": "optional",
+            "cardinality": "many",
+            "role": "",
+            "entityId": 49
+          }
+        ],
+        "id": 55
+      }
+    },
+    {
+      "type": "Relationship",
+      "details": {
+        "name": "Title_Contract",
+        "isIdentifying": false,
+        "x": 600,
+        "y": 450,
+        "slots": [
+          {
+            "slotIndex": 0,
+            "minimum": "",
+            "maximum": "",
+            "participation": "mandatory",
+            "cardinality": "one",
+            "role": "",
+            "entityId": 15
+          },
+          {
+            "slotIndex": 1,
+            "minimum": "",
+            "maximum": "",
+            "participation": "optional",
+            "cardinality": "many",
+            "role": "",
+            "entityId": 49
+          }
+        ],
+        "id": 56
+      }
+    },
+    {
+      "type": "Entity",
+      "details": {
+        "name": "Creator_Award",
+        "type": "regular",
+        "x": 150,
+        "y": 350,
+        "isDisjointed": true,
+        "isTotalSpecialization": true,
+        "isSubtype": false,
+        "supertypeEntityId": null,
+        "id": 57
+      }
+    },
+    {
+      "type": "Attribute",
+      "details": {
+        "name": "AwardID",
+        "isDerived": false,
+        "isMultivalued": false,
+        "isOptional": false,
+        "isComposite": false,
+        "isUnique": true,
+        "x": 50,
+        "y": 300,
+        "id": 58
+      }
+    },
+    {
+      "type": "Attribute",
+      "details": {
+        "name": "AwardName",
+        "isDerived": false,
+        "isMultivalued": false,
+        "isOptional": false,
+        "isComposite": false,
+        "isUnique": false,
+        "x": 50,
+        "y": 350,
+        "id": 59
+      }
+    },
+    {
+      "type": "Attribute",
+      "details": {
+        "name": "AwardYear",
+        "isDerived": false,
+        "isMultivalued": false,
+        "isOptional": false,
+        "isComposite": false,
+        "isUnique": false,
+        "x": 50,
+        "y": 400,
+        "id": 60
+      }
+    },
+    {
+      "type": "Relationship",
+      "details": {
+        "name": "Creator_Awarded",
+        "isIdentifying": false,
+        "x": 300,
+        "y": 250,
+        "slots": [
+          {
+            "slotIndex": 0,
+            "minimum": "",
+            "maximum": "",
+            "participation": "mandatory",
+            "cardinality": "one",
+            "role": "",
+            "entityId": 7
+          },
+          {
+            "slotIndex": 1,
+            "minimum": "",
+            "maximum": "",
+            "participation": "optional",
+            "cardinality": "many",
+            "role": "",
+            "entityId": 57
+          }
+        ],
+        "id": 61
+      }
+    },
+    {
+      "type": "Entity",
+      "details": {
+        "name": "Title_Award",
+        "type": "regular",
+        "x": 950,
+        "y": 300,
+        "isDisjointed": true,
+        "isTotalSpecialization": true,
+        "isSubtype": false,
+        "supertypeEntityId": null,
+        "id": 62
+      }
+    },
+    {
+      "type": "Attribute",
+      "details": {
+        "name": "Award_Name",
+        "isDerived": false,
+        "isMultivalued": false,
+        "isOptional": false,
+        "isComposite": false,
+        "isUnique": true,
+        "x": 1050,
+        "y": 250,
+        "id": 63
+      }
+    },
+    {
+      "type": "Attribute",
+      "details": {
+        "name": "Given_By",
+        "isDerived": false,
+        "isMultivalued": false,
+        "isOptional": false,
+        "isComposite": false,
+        "isUnique": true,
+        "x": 1050,
+        "y": 300,
+        "id": 64
+      }
+    },
+    {
+      "type": "Attribute",
+      "details": {
+        "name": "Result",
+        "isDerived": false,
+        "isMultivalued": false,
+        "isOptional": false,
+        "isComposite": false,
+        "isUnique": false,
+        "x": 1050,
+        "y": 350,
+        "id": 65
+      }
+    },
+    {
+      "type": "Relationship",
+      "details": {
+        "name": "Title_Awarded",
+        "isIdentifying": false,
+        "x": 850,
+        "y": 300,
+        "slots": [
+          {
+            "slotIndex": 0,
+            "minimum": "",
+            "maximum": "",
+            "participation": "mandatory",
+            "cardinality": "one",
+            "role": "",
+            "entityId": 15
+          },
+          {
+            "slotIndex": 1,
+            "minimum": "",
+            "maximum": "",
+            "participation": "optional",
+            "cardinality": "many",
+            "role": "",
+            "entityId": 62
+          }
+        ],
+        "id": 66
+      }
+    },
+    {
+      "type": "
