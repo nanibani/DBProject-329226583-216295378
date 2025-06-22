@@ -1,3 +1,4 @@
+ALTER TABLE award RENAME TO creator_award 
 -- Simple Database Integration Script
 -- Transfer Production data to Title table and update dependencies
 
