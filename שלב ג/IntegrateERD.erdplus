@@ -1,1 +1,242 @@
-{"version":2,"www":"erdplus.com","shapes":[{"type":"Entity","details":{"name":"Content_Creator","type":"regular","x":500,"y":700,"isDisjointed":true,"isTotalSpecialization":true,"isSubtype":false,"supertypeEntityId":null,"id":1}},{"type":"Attribute","details":{"name":"CreatorID","isDerived":false,"isMultivalued":false,"isOptional":false,"isComposite":false,"isUnique":true,"x":350,"y":700,"id":2}},{"type":"Attribute","details":{"name":"FullName","isDerived":false,"isMultivalued":false,"isOptional":false,"isComposite":false,"isUnique":false,"x":360,"y":760,"id":3}},{"type":"Attribute","details":{"name":"Country","isDerived":false,"isMultivalued":false,"isOptional":false,"isComposite":false,"isUnique":false,"x":400,"y":810,"id":4}},{"type":"Entity","details":{"name":"Agent","type":"regular","x":800,"y":700,"isDisjointed":true,"isTotalSpecialization":true,"isSubtype":false,"supertypeEntityId":null,"id":5}},{"type":"Attribute","details":{"name":"AgentID","isDerived":false,"isMultivalued":false,"isOptional":false,"isComposite":false,"isUnique":true,"x":930,"y":700,"id":6}},{"type":"Attribute","details":{"name":"AgencyName","isDerived":false,"isMultivalued":false,"isOptional":false,"isComposite":false,"isUnique":false,"x":940,"y":760,"id":7}},{"type":"Relationship","details":{"name":"Represents","isIdentifying":false,"x":650,"y":700,"slots":[{"slotIndex":0,"minimum":"0","maximum":"N","participation":"optional","cardinality":"many","role":"","entityId":1},{"slotIndex":1,"minimum":"1","maximum":"1","participation":"mandatory","cardinality":"one","role":"","entityId":5}],"id":8}},{"type":"Entity","details":{"name":"Title","type":"super","x":650,"y":100,"isDisjointed":true,"isTotalSpecialization":true,"isSubtype":false,"supertypeEntityId":null,"id":9}},{"type":"Attribute","details":{"name":"TitleID","isDerived":false,"isMultivalued":false,"isOptional":false,"isComposite":false,"isUnique":true,"x":500,"y":100,"id":10}},{"type":"Attribute","details":{"name":"Name","isDerived":false,"isMultivalued":false,"isOptional":false,"isComposite":false,"isUnique":false,"x":510,"y":160,"id":11}},{"type":"Attribute","details":{"name":"AgeRating","isDerived":false,"isMultivalued":false,"isOptional":false,"isComposite":false,"isUnique":false,"x":550,"y":210,"id":12}},{"type":"Entity","details":{"name":"Movie","type":"regular","x":450,"y":300,"isDisjointed":true,"isTotalSpecialization":true,"isSubtype":true,"supertypeEntityId":9,"id":13}},{"type":"Entity","details":{"name":"TV_Show","type":"regular","x":850,"y":300,"isDisjointed":true,"isTotalSpecialization":true,"isSubtype":true,"supertypeEntityId":9,"id":14}},{"type":"Entity","details":{"name":"Contract","type":"regular","x":650,"y":500,"isDisjointed":true,"isTotalSpecialization":true,"isSubtype":false,"supertypeEntityId":null,"id":15}},{"type":"Attribute","details":{"name":"ContractID","isDerived":false,"isMultivalued":false,"isOptional":false,"isComposite":false,"isUnique":true,"x":500,"y":500,"id":16}},{"type":"Attribute","details":{"name":"Role","isDerived":false,"isMultivalued":false,"isOptional":false,"isComposite":false,"isUnique":false,"x":510,"y":560,"id":17}},{"type":"Relationship","details":{"name":"Signs","isIdentifying":false,"x":650,"y":600,"slots":[{"slotIndex":0,"minimum":"1","maximum":"N","participation":"optional","cardinality":"many","role":"","entityId":1},{"slotIndex":1,"minimum":"1","maximum":"1","participation":"mandatory","cardinality":"one","role":"","entityId":15}],"id":18}},{"type":"Relationship","details":{"name":"For Title","isIdentifying":false,"x":650,"y":300,"slots":[{"slotIndex":0,"minimum":"1","maximum":"1","participation":"mandatory","cardinality":"one","role":"","entityId":9},{"slotIndex":1,"minimum":"0","maximum":"N","participation":"optional","cardinality":"many","role":"","entityId":15}],"id":19}},{"type":"Entity","details":{"name":"Season","type":"weak","x":1100,"y":300,"isDisjointed":true,"isTotalSpecialization":true,"isSubtype":false,"supertypeEntityId":null,"id":20}},{"type":"Attribute","details":{"name":"SeasonNum","isDerived":false,"isMultivalued":false,"isOptional":false,"isComposite":false,"isUnique":true,"x":1230,"y":300,"id":21}},{"type":"Relationship","details":{"name":"Has_Season","isIdentifying":true,"x":975,"y":300,"slots":[{"slotIndex":0,"minimum":"1","maximum":"1","participation":"mandatory","cardinality":"one","role":"","entityId":14},{"slotIndex":1,"minimum":"0","maximum":"N","participation":"mandatory","cardinality":"many","role":"","entityId":20}],"id":22}},{"type":"Entity","details":{"name":"Genre","type":"regular","x":1100,"y":100,"isDisjointed":true,"isTotalSpecialization":true,"isSubtype":false,"supertypeEntityId":null,"id":23}},{"type":"Attribute","details":{"name":"GenreID","isDerived":false,"isMultivalued":false,"isOptional":false,"isComposite":false,"isUnique":true,"x":1230,"y":100,"id":24}},{"type":"Entity","details":{"name":"Title_Genre","type":"associative","x":875,"y":100,"isDisjointed":true,"isTotalSpecialization":true,"isSubtype":false,"supertypeEntityId":null,"id":25}}],"connectors":[{"type":"Connector","details":{"id":100},"source":2,"destination":1},{"type":"Connector","details":{"id":101},"source":3,"destination":1},{"type":"Connector","details":{"id":102},"source":4,"destination":1},{"type":"Connector","details":{"id":103},"source":6,"destination":5},{"type":"Connector","details":{"id":104},"source":7,"destination":5},{"type":"RelationshipConnector","details":{"slotIndex":0,"id":105},"source":1,"destination":8},{"type":"RelationshipConnector","details":{"slotIndex":1,"id":106},"source":5,"destination":8},{"type":"Connector","details":{"id":107},"source":10,"destination":9},{"type":"Connector","details":{"id":108},"source":11,"destination":9},{"type":"Connector","details":{"id":109},"source":12,"destination":9},{"type":"Connector","details":{"isSupertypeConnector":true,"id":110},"source":13,"destination":9},{"type":"Connector","details":{"isSupertypeConnector":true,"id":111},"source":14,"destination":9},{"type":"Connector","details":{"id":112},"source":16,"destination":15},{"type":"Connector","details":{"id":113},"source":17,"destination":15},{"type":"RelationshipConnector","details":{"slotIndex":0,"id":114},"source":1,"destination":18},{"type":"RelationshipConnector","details":{"slotIndex":1,"id":115},"source":15,"destination":18},{"type":"RelationshipConnector","details":{"slotIndex":0,"id":116},"source":9,"destination":19},{"type":"RelationshipConnector","details":{"slotIndex":1,"id":117},"source":15,"destination":19},{"type":"Connector","details":{"id":118},"source":21,"destination":20},{"type":"RelationshipConnector","details":{"slotIndex":0,"id":119},"source":14,"destination":22},{"type":"RelationshipConnector","details":{"slotIndex":1,"id":120},"source":20,"destination":22},{"type":"Connector","details":{"id":121},"source":24,"destination":23},{"type":"Relationship","details":{"name":"","isIdentifying":false,"x":1000,"y":100,"slots":[{"slotIndex":0,"minimum":"1","maximum":"1","participation":"unspecified","cardinality":"one","role":"","entityId":23},{"slotIndex":1,"minimum":"1","maximum":"1","participation":"unspecified","cardinality":"many","role":"","entityId":25}],"id":122}},{"type":"RelationshipConnector","details":{"slotIndex":0,"id":123},"source":23,"destination":122},{"type":"RelationshipConnector","details":{"slotIndex":1,"id":124},"source":25,"destination":122},{"type":"Relationship","details":{"name":"","isIdentifying":false,"x":762.5,"y":100,"slots":[{"slotIndex":0,"minimum":"1","maximum":"1","participation":"unspecified","cardinality":"one","role":"","entityId":25},{"slotIndex":1,"minimum":"1","maximum":"1","participation":"unspecified","cardinality":"many","role":"","entityId":9}],"id":125}},{"type":"RelationshipConnector","details":{"slotIndex":0,"id":126},"source":25,"destination":125},{"type":"RelationshipConnector","details":{"slotIndex":1,"id":127},"source":9,"destination":125}],"width":2000,"height":1000}
+{
+  "version": 2,
+  "www": "erdplus.com",
+  "entities": [
+    {
+      "name": "Agent",
+      "x": 100,
+      "y": 600,
+      "attributes": [
+        { "name": "AgentID", "key": true },
+        { "name": "AgentFullName" },
+        { "name": "AgencyName" },
+        { "name": "PhoneNumber" },
+        { "name": "Email" }
+      ]
+    },
+    {
+      "name": "Content_Creator",
+      "x": 300,
+      "y": 600,
+      "attributes": [
+        { "name": "CreatorID", "key": true },
+        { "name": "Content_CreatorFullName" },
+        { "name": "BirthDate" },
+        { "name": "IsActive" },
+        { "name": "JoinDate" }
+      ]
+    },
+    {
+      "name": "Title",
+      "x": 600,
+      "y": 100,
+      "attributes": [
+        { "name": "Title_ID", "key": true },
+        { "name": "Title_Name" },
+        { "name": "Age_Rating" }
+      ]
+    },
+    {
+      "name": "Contract",
+      "x": 500,
+      "y": 600,
+      "attributes": [
+        { "name": "ContractID", "key": true },
+        { "name": "StartDate" },
+        { "name": "EndDate" },
+        { "name": "Payment" },
+        { "name": "RoleContract" }
+      ]
+    },
+    {
+      "name": "Feedback",
+      "x": 800,
+      "y": 600,
+      "attributes": [
+        { "name": "Feedback_ID", "key": true },
+        { "name": "Feedback_Date" },
+        { "name": "Feedback_Rating" },
+        { "name": "Feedback_Comment" }
+      ]
+    },
+    {
+      "name": "Franchise",
+      "x": 1000,
+      "y": 100,
+      "attributes": [
+        { "name": "Franchise_ID", "key": true },
+        { "name": "Franchise_Name" },
+        { "name": "Number_of_titles" }
+      ]
+    },
+    {
+      "name": "Genre",
+      "x": 1100,
+      "y": 400,
+      "attributes": [
+        { "name": "GENREID", "key": true },
+        { "name": "GENRENAME" }
+      ]
+    },
+    {
+      "name": "creator_award",
+      "x": 300,
+      "y": 750,
+      "attributes": [
+        { "name": "AwardID", "key": true },
+        { "name": "AwardName" },
+        { "name": "AwardYear" }
+      ]
+    },
+    {
+      "name": "content_award",
+      "x": 800,
+      "y": 200,
+      "attributes": [
+        { "name": "PrizeName", "key": true },
+        { "name": "GivenBy", "key": true },
+        { "name": "Result" }
+      ]
+    },
+    {
+      "name": "Season",
+      "x": 500,
+      "y": 300,
+      "attributes": [
+        { "name": "TitleID", "key": true },
+        { "name": "SeasonNumber", "key": true },
+        { "name": "CurrentState" }
+      ]
+    },
+    {
+      "name": "Episode",
+      "x": 700,
+      "y": 300,
+      "attributes": [
+        { "name": "TitleID", "key": true },
+        { "name": "SeasonNumber", "key": true },
+        { "name": "EpisodeNumber", "key": true },
+        { "name": "Duration" },
+        { "name": "AirDate" }
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "name": "Has_Agent",
+      "x": 220,
+      "y": 600,
+      "connections": [
+        { "entity": "Agent", "cardinality": "1" },
+        { "entity": "Content_Creator", "cardinality": "N" }
+      ]
+    },
+    {
+      "name": "Signs",
+      "x": 400,
+      "y": 600,
+      "connections": [
+        { "entity": "Content_Creator", "cardinality": "1" },
+        { "entity": "Contract", "cardinality": "N" }
+      ]
+    },
+    {
+      "name": "Related_To",
+      "x": 600,
+      "y": 600,
+      "connections": [
+        { "entity": "Contract", "cardinality": "N" },
+        { "entity": "Title", "cardinality": "1" }
+      ]
+    },
+    {
+      "name": "Gives_Feedback",
+      "x": 700,
+      "y": 600,
+      "connections": [
+        { "entity": "Feedback", "cardinality": "N" },
+        { "entity": "Title", "cardinality": "1" }
+      ]
+    },
+    {
+      "name": "Receives_Award",
+      "x": 300,
+      "y": 700,
+      "connections": [
+        { "entity": "Content_Creator", "cardinality": "1" },
+        { "entity": "creator_award", "cardinality": "N" }
+      ]
+    },
+    {
+      "name": "Awarded_To",
+      "x": 700,
+      "y": 200,
+      "connections": [
+        { "entity": "content_award", "cardinality": "N" },
+        { "entity": "Title", "cardinality": "1" }
+      ]
+    },
+    {
+      "name": "BELONGS_TO",
+      "x": 900,
+      "y": 100,
+      "connections": [
+        { "entity": "Franchise", "cardinality": "N" },
+        { "entity": "Title", "cardinality": "N" }
+      ]
+    },
+    {
+      "name": "HAS_GENRE",
+      "x": 1000,
+      "y": 300,
+      "connections": [
+        { "entity": "Title", "cardinality": "N" },
+        { "entity": "Genre", "cardinality": "N" }
+      ]
+    },
+    {
+      "name": "Has_Season",
+      "x": 500,
+      "y": 250,
+      "connections": [
+        { "entity": "Title", "cardinality": "1" },
+        { "entity": "Season", "cardinality": "N" }
+      ]
+    },
+    {
+      "name": "Has_Episode",
+      "x": 700,
+      "y": 250,
+      "connections": [
+        { "entity": "Season", "cardinality": "1" },
+        { "entity": "Episode", "cardinality": "N" }
+      ]
+    }
+  ],
+  "specializations": [
+    {
+      "superclass": "Title",
+      "x": 600,
+      "y": 50,
+      "subclasses": ["Movie", "TV_Show"],
+      "type": "total",
+      "overlap": false
+    }
+  ],
+  "subclasses": [
+    {
+      "name": "Movie",
+      "x": 450,
+      "y": 100,
+      "attributes": ["ReleaseDate", "Duration", "MovieType"]
+    },
+    {
+      "name": "TV_Show",
+      "x": 750,
+      "y": 100,
+      "attributes": ["Number_of_seasons"]
+    }
+  ],
+  "width": 1400,
+  "height": 1000
+}
