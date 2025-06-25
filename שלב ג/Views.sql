@@ -93,7 +93,7 @@ SELECT
     Total_Awards,
     Experience_Level
 FROM ContentCreatorPerformance
-WHERE Experience_Level = 'יוצר מנוסה'
+WHERE Experience_Level = 'יוצר בינוני'
   AND Average_Payment > (SELECT AVG(Average_Payment) FROM ContentCreatorPerformance)
 ORDER BY Average_Payment DESC;
 
