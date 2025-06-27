@@ -239,8 +239,8 @@
 
 ה-ERD הבא מציג את המודל המאוחד של שתי המערכות לאחר האינטגרציה.
 
-00![image](https://github.com/user-attachments/assets/c8f5eadc-9a74-473b-8fc4-abe1f23fb126)
 
+![Screenshot 2025-06-27 190419](https://github.com/user-attachments/assets/34381df1-1217-4d8b-bd5e-bd5d2d7978fb)
 
 #### תרשים DSD לאחר אינטגרציה
 
