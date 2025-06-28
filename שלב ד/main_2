@@ -1,0 +1,17 @@
+DO $$
+DECLARE
+    title_id INTEGER := 1;
+    updated_seasons INTEGER;
+BEGIN
+    -- קריאה לפונקציה
+    updated_seasons := update_season_count(title_id);
+    
+    -- קריאה לפרוצדורה
+    CALL update_seasons_status();
+    
+    RAISE NOTICE 'Main program 2 completed. Updated % seasons', updated_seasons;
+EXCEPTION
+    WHEN OTHERS THEN
+        RAISE NOTICE 'Error in main program 2: %', SQLERRM;
+END;
+$$;
