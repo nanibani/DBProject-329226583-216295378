@@ -368,4 +368,363 @@ _ _ _
 השאילתה מספקת ניתוח השוואתי של מדינות לפי יוצרי תוכן פעילים בלבד – כולל מספר יוצרים, ממוצע חוזים, ממוצע תשלום וסה"כ פרסים. מוצגות רק מדינות עם לפחות שני יוצרים פעילים.
 ![image](https://github.com/user-attachments/assets/359718b9-6479-42f4-b19f-4945e1d28001)
 
+## שלב ד' - תכנות בסיס נתונים מתקדם
 
+בשלב זה פיתחנו תוכניות מתקדמות בסיס נתונים הכוללות פונקציות, פרוצדורות, טריגרים ותוכניות ראשיות. התוכניות מממשות פונקציונליות מגוונת לניהול ובקרת נתונים במערכת Netflix המשולבת.
+
+### פונקציות (Functions)
+
+#### פונקציה 1: חישוב סטטיסטיקות יוצר תוכן
+
+**תיאור מילולי:**
+פונקציה זו מחזירה סטטיסטיקות מפורטות עבור יוצר תוכן נתון. הפונקציה מקבלת מזהה יוצר ומחזירה מצביע לתוצאה (REF CURSOR) הכולל את השם המלא של היוצר, המדינה, מספר החוזים הכולל וממוצע התשלומים. הפונקציה כוללת בדיקת קיום היוצר וטיפול בשגיאות.
+
+**הקוד:**
+```sql
+CREATE OR REPLACE FUNCTION get_creator_statistics(p_creator_id INTEGER)
+RETURNS REFCURSOR AS $$
+DECLARE
+    result_cursor REFCURSOR := 'creator_stats';
+    creator_rec RECORD;
+    contract_count INTEGER;
+BEGIN
+    -- בדיקת קיום היוצר
+    SELECT INTO creator_rec * FROM content_creator WHERE creatorid = p_creator_id;
+    
+    IF NOT FOUND THEN
+        RAISE EXCEPTION 'Creator with ID % not found', p_creator_id;
+    END IF;
+    
+    -- ספירת חוזים
+    SELECT COUNT(*) INTO contract_count 
+    FROM contract WHERE creatorid = p_creator_id;
+    
+    OPEN result_cursor FOR
+        SELECT cc.content_creatorfullname, cc.country, 
+               contract_count as total_contracts,
+               AVG(c.payment) as avg_payment
+        FROM content_creator cc
+        LEFT JOIN contract c ON cc.creatorid = c.creatorid
+        WHERE cc.creatorid = p_creator_id
+        GROUP BY cc.creatorid, cc.content_creatorfullname, cc.country;
+    
+    RETURN result_cursor;
+EXCEPTION
+    WHEN OTHERS THEN
+        RAISE NOTICE 'Error: %', SQLERRM;
+        RETURN NULL;
+END;
+$$ LANGUAGE plpgsql; הוכחת פעולה:
+Function 1 Test
+הפעלת הפונקציה והצגת סטטיסטיקות יוצר התוכן
+
+פונקציה 2: עדכון מספר עונות בסדרה
+תיאור מילולי:
+פונקציה זו מעדכנת אוטומטית את מספר העונות בטבלת tv_show על סמך מספר העונות הקיימות בפועל בטבלת season. הפונקציה מקבלת מזהה כותר, בודקת את קיומו, סופרת את העונות הקיימות ומעדכנת את השדה המתאים. מוחזר מספר העונות שנספרו.
+
+הקוד:
+
+SQL
+
+Collapse
+CREATE OR REPLACE FUNCTION update_season_count(p_title_id INTEGER)
+RETURNS INTEGER AS $$
+DECLARE
+    season_count INTEGER;
+    title_exists BOOLEAN;
+BEGIN
+    -- בדיקת קיום הכותר
+    SELECT EXISTS(SELECT 1 FROM tv_show WHERE title_id = p_title_id) INTO title_exists;
+    
+    IF NOT title_exists THEN
+        RAISE EXCEPTION 'TV Show with ID % not found', p_title_id;
+    END IF;
+    
+    -- ספירת עונות
+    SELECT COUNT(*) INTO season_count 
+    FROM season WHERE title_id = p_title_id;
+    
+    -- עדכון מספר העונות
+    UPDATE tv_show 
+    SET number_of_seasons = season_count 
+    WHERE title_id = p_title_id;
+    
+    RETURN season_count;
+EXCEPTION
+    WHEN OTHERS THEN
+        RAISE NOTICE 'Error updating season count: %', SQLERRM;
+        RETURN -1;
+END;
+$$ LANGUAGE plpgsql;
+הוכחת פעולה:
+Function 2 Test
+הפעלת הפונקציה ועדכון מספר העונות בטבלה
+
+פרוצדורות (Procedures)
+פרוצדורה 1: ניהול פרנצ'יז
+תיאור מילולי:
+פרוצדורה זו מבצעת פעולות ניהול על פרנצ'יז נתון. כרגע מממשת פעולת COUNT שסופרת ומעדכנת את מספר הכותרים השייכים לפרנצ'יז. הפרוצדורה משתמשת ב-CURSOR מפורש לעבור על כל הכותרים, מדפיסה את פרטיהם ומעדכנת את שדה number_of_titles בטבלת franchise.
+
+הקוד:
+
+SQL
+
+Collapse
+CREATE OR REPLACE PROCEDURE manage_franchise_titles(
+    p_franchise_id INTEGER,
+    p_action VARCHAR(10)
+)
+LANGUAGE plpgsql AS $$
+DECLARE
+    title_cursor CURSOR FOR 
+        SELECT t.title_id, t.title_name 
+        FROM title t
+        JOIN belongs_to bt ON t.title_id = bt.title_id
+        WHERE bt.franchise_id = p_franchise_id;
+    
+    title_rec RECORD;
+    title_count INTEGER := 0;
+BEGIN
+    IF p_action = 'COUNT' THEN
+        -- ספירה ועדכון מספר הכותרים בפרנצ'יז
+        FOR title_rec IN title_cursor LOOP
+            title_count := title_count + 1;
+            RAISE NOTICE 'Title: % (ID: %)', title_rec.title_name, title_rec.title_id;
+        END LOOP;
+        
+        UPDATE franchise 
+        SET number_of_titles = title_count 
+        WHERE franchise_id = p_franchise_id;
+        
+        RAISE NOTICE 'Updated franchise % with % titles', p_franchise_id, title_count;
+    END IF;
+EXCEPTION
+    WHEN OTHERS THEN
+        RAISE EXCEPTION 'Error in manage_franchise_titles: %', SQLERRM;
+END;
+$$;
+הוכחת פעולה:
+Procedure 1 Test
+הפעלת הפרוצדורה, הדפסת כותרי הפרנצ'יז ועדכון הטבלה
+
+פרוצדורה 2: עדכון סטטוס עונות
+תיאור מילולי:
+פרוצדורה זו עוברת על כל העונות במערכת ומעדכנת את הסטטוס שלהען בהתאם למספר הפרקים הקיימים. הפרוצדורה בודקת אם מספר הפרקים בפועל תואם למספר המתוכנן ומעדכנת את הסטטוס ל: "Upcoming" (אין פרקים), "Ongoing" (פרקים חלקיים), או "Completed" (כל הפרקים קיימים).
+
+הקוד:
+
+SQL
+
+Collapse
+CREATE OR REPLACE PROCEDURE update_seasons_status()
+LANGUAGE plpgsql AS $$
+DECLARE
+    season_rec RECORD;
+    episode_count INTEGER;
+BEGIN
+    -- לולאה על כל העונות
+    FOR season_rec IN 
+        SELECT title_id, season_number, number_of_episodes, current_status
+        FROM season
+    LOOP
+        -- ספירת פרקים בפועל
+        SELECT COUNT(*) INTO episode_count
+        FROM episode 
+        WHERE title_id = season_rec.title_id 
+        AND season_number = season_rec.season_number;
+        
+        -- עדכון סטטוס בהתאם למספר הפרקים
+        IF episode_count = 0 THEN
+            UPDATE season 
+            SET current_status = 'Upcoming'
+            WHERE title_id = season_rec.title_id 
+            AND season_number = season_rec.season_number;
+        ELSIF episode_count < season_rec.number_of_episodes THEN
+            UPDATE season 
+            SET current_status = 'Ongoing'
+            WHERE title_id = season_rec.title_id 
+            AND season_number = season_rec.season_number;
+        ELSE
+            UPDATE season 
+            SET current_status = 'Completed'
+            WHERE title_id = season_rec.title_id 
+            AND season_number = season_rec.season_number;
+        END IF;
+    END LOOP;
+EXCEPTION
+    WHEN OTHERS THEN
+        RAISE EXCEPTION 'Error updating seasons status: %', SQLERRM;
+END;
+$$;
+הוכחת פעולה:
+Procedure 2 Test
+הפעלת הפרוצדורה ועדכון סטטוס העונות
+
+טריגרים (Triggers)
+טריגר 1: עדכון אוטומטי של מספר הכותרים בפרנצ'יז
+תיאור מילולי:
+טריגר זה מופעל אוטומטית בכל פעם שמתווסף או נמחק כותר מפרנצ'יז (טבלת belongs_to). הטריגר מעדכן אוטומטי את השדה number_of_titles בטבלת franchise - מוסיף 1 בעת הוספה ומחסיר 1 בעת מחיקה. זה מבטיח שהמידע על מספר הכותרים יהיה תמיד מעודכן.
+
+הקוד:
+
+SQL
+
+Collapse
+CREATE OR REPLACE FUNCTION update_franchise_count()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF TG_OP = 'INSERT' THEN
+        UPDATE franchise 
+        SET number_of_titles = number_of_titles + 1
+        WHERE franchise_id = NEW.franchise_id;
+        RETURN NEW;
+    ELSIF TG_OP = 'DELETE' THEN
+        UPDATE franchise 
+        SET number_of_titles = number_of_titles - 1
+        WHERE franchise_id = OLD.franchise_id;
+        RETURN OLD;
+    END IF;
+    RETURN NULL;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trigger_franchise_count
+    AFTER INSERT OR DELETE ON belongs_to
+    FOR EACH ROW
+    EXECUTE FUNCTION update_franchise_count();
+הוכחת פעולה:
+Trigger 1 Test
+הוספת כותר לפרנצ'יז ועדכון אוטומטי של number_of_titles
+
+טריגר 2: בדיקת תקינות חוזה
+תיאור מילולי:
+טריגר זה מופעל לפני הוספה או עדכון של חוזה ובודק את תקינות הנתונים. הטריגר בודק שתאריך ההתחלה קודם לתאריך הסיום ושהתשלום חיובי. אם אחד מהתנאים לא מתקיים, הטריגר זורק חריגה ומונע את הפעולה.
+
+הקוד:
+
+SQL
+
+Collapse
+CREATE OR REPLACE FUNCTION validate_contract()
+RETURNS TRIGGER AS $$
+BEGIN
+    -- בדיקה שתאריך התחלה קודם לתאריך סיום
+    IF NEW.startdate >= NEW.enddate THEN
+        RAISE EXCEPTION 'Start date must be before end date';
+    END IF;
+    
+    -- בדיקה שהתשלום חיובי
+    IF NEW.payment <= 0 THEN
+        RAISE EXCEPTION 'Payment must be positive';
+    END IF;
+    
+    RETURN NEW;
+EXCEPTION
+    WHEN OTHERS THEN
+        RAISE EXCEPTION 'Contract validation failed: %', SQLERRM;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trigger_validate_contract
+    BEFORE INSERT OR UPDATE ON contract
+    FOR EACH ROW
+    EXECUTE FUNCTION validate_contract();
+הוכחת פעולה:
+Trigger 2 Test
+*ניסיון הוספת חוזה לא תקין וזריקת ח
+
+Claude Sonnet 4
+תוכל להמשיך?
+
+
+Thought Process
+expand
+Markdown
+
+Collapse
+**הוכחת פעולה:**
+![Trigger 2 Test](images/trigger2_test.png)
+*ניסיון הוספת חוזה לא תקין וזריקת חריגה על ידי הטריגר*
+
+### תוכניות ראשיות (Main Programs)
+
+#### תוכנית ראשית 1: ניתוח סטטיסטיקות וניהול פרנצ'יז
+
+**תיאור מילולי:**
+תוכנית זו משלבת שימוש בפונקציה לקבלת סטטיסטיקות יוצר תוכן ובפרוצדורה לניהול פרנצ'יז. התוכנית קוראת לפונקציה get_creator_statistics עבור יוצר מסוים, ולאחר מכן מפעילה את הפרוצדורה manage_franchise_titles לספירה ועדכון מספר הכותרים בפרנצ'יז. התוכנית כוללת טיפול בשגיאות מקיף.
+
+**הקוד:**
+```sql
+-- main_program_1.sql
+DO $$
+DECLARE
+    stats_cursor REFCURSOR;
+    creator_id INTEGER := 1;
+    season_count INTEGER;
+BEGIN
+    -- קריאה לפונקציה
+    stats_cursor := get_creator_statistics(creator_id);
+    
+    -- קריאה לפרוצדורה
+    CALL manage_franchise_titles(1, 'COUNT');
+    
+    RAISE NOTICE 'Main program 1 completed successfully';
+EXCEPTION
+    WHEN OTHERS THEN
+        RAISE NOTICE 'Error in main program 1: %', SQLERRM;
+END;
+$$;
+הוכחת פעולה:
+Main Program 1 Test
+הפעלת התוכנית הראשית והצגת תוצאות הפונקציה והפרוצדורה
+
+תוכנית ראשית 2: עדכון עונות וסטטוס
+תיאור מילולי:
+תוכנית זו מבצעת עדכון מקיף של נתוני הסדרות והעונות. התוכנית קוראת לפונקציה update_season_count לעדכון מספר העונות עבור סדרה מסוימת, ולאחר מכן מפעילה את הפרוצדורה update_seasons_status לעדכון סטטוס כלל העונות במערכת. התוכנית מציגה את מספר העונות שעודכנו וכוללת טיפול בשגיאות.
+
+הקוד:
+
+SQL
+
+Collapse
+-- main_program_2.sql
+DO $$
+DECLARE
+    title_id INTEGER := 1;
+    updated_seasons INTEGER;
+BEGIN
+    -- קריאה לפונקציה
+    updated_seasons := update_season_count(title_id);
+    
+    -- קריאה לפרוצדורה
+    CALL update_seasons_status();
+    
+    RAISE NOTICE 'Main program 2 completed. Updated % seasons', updated_seasons;
+EXCEPTION
+    WHEN OTHERS THEN
+        RAISE NOTICE 'Error in main program 2: %', SQLERRM;
+END;
+$$;
+הוכחת פעולה:
+Main Program 2 Test
+הפעלת התוכנית הראשית ועדכון נתוני העונות והסטטוס סיכום שלב ד'
+בשלב זה יישמנו בהצלחה כל הדרישות של תכנות בסיס נתונים מתקדם:
+
+רכיבים שיושמו:
+
+✅ Cursor - שימוש ב-implicit ו-explicit cursors
+✅ Ref Cursor - החזרה בפונקציה הראשונה
+✅ פקודות DML - UPDATE במספר מקומות
+✅ הסתעפויות - IF/THEN/ELSE במספר מקומות
+✅ לולאות - FOR loops
+✅ Exception - טיפול בשגיאות בכל התוכניות
+✅ רשומות - שימוש ב-RECORD
+פונקציונליות שהושגה:
+
+ניהול יוצרי תוכן - קבלת סטטיסטיקות מפורטות
+ניהול סדרות - עדכון אוטומטי של מספר עונות
+ניהול פרנצ'יזים - ספירה ועדכון מספר כותרים
+ניהול עונות - עדכון סטטוס לפי מספר פרקים
+בקרת איכות - ואלידציה אוטומטית של חוזים
+עדכון אוטומטי - תחזוקה של נתונים עקביים
+התוכניות נבדקו בהצלחה ומבצעות את הפונקציונליות הנדרשת תוך שמירה על עקביות הנתונים ואמינות המערכת.
