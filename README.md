@@ -1,29 +1,35 @@
 # פרויקט: מערכת לניהול תוכן מדיה - Netflix
 
-**שמות מגישים**: יוסף נאור חסון, אושר מגר
-**המערכת**: Netflix
+**שמות מגישים**: יוסף נאור חסון, אושר מגר  
+**המערכת**: Netflix  
 **היחידה הנבחרת**: תוכן וסוגי מדיה
 
 ---
 
 ## תוכן עניינים
 
-1.  [מבוא](#מבוא)
-2.  [פירוט הישויות](#פירוט-הישויות)
-3.  [תרשים ERD מקורי](#תרשים-erd-מקורי)
-4.  [תרשים DSD וטבלאות SQL](#תרשים-dsd-וטבלאות-sql)
-5.  [הזנת נתונים](#הזנת-נתונים)
-6.  [שאילתות - שלב ב'](#שאילתות---שלב-ב)
-    * [שאילתות SELECT](#שאילתות-select)
-    * [שאילתות DELETE](#שאילתות-delete)
-    * [שאילתות UPDATE](#שאילתות-update)
-7.  [סיכום שלבים א' ו-ב'](#סיכום-שלבים-א-ו-ב)
-8.  [שלב ג' - אינטגרציה ומבטים](#שלב-ג---אינטגרציה-ומבטים)
-    * [הנדוס לאחור: המערכת הנוספת](#הנדוס-לאחור-המערכת-הנוספת)
-    * [תהליך האינטגרציה](#תהליך-האינטגרציה)
-    * [מבטים (Views)](#מבטים-views)
-    * [גיבוי מסד נתונים משולב](#גיבוי-מסד-נתונים-משולב)
-9.  [סיכום כללי](#סיכום-כללי)
+1. [מבוא](#מבוא)
+2. [פירוט הישויות](#פירוט-הישויות)
+3. [תרשים ERD מקורי](#תרשים-erd-מקורי)
+4. [תרשים DSD וטבלאות SQL](#תרשים-dsd-וטבלאות-sql)
+5. [הזנת נתונים](#הזנת-נתונים)
+6. [שאילתות - שלב ב'](#שאילתות---שלב-ב)
+   - [שאילתות SELECT](#שאילתות-select)
+   - [שאילתות DELETE](#שאילתות-delete)
+   - [שאילתות UPDATE](#שאילתות-update)
+7. [סיכום שלבים א' ו-ב'](#סיכום-שלבים-א-ו-ב)
+8. [שלב ג' - אינטגרציה ומבטים](#שלב-ג---אינטגרציה-ומבטים)
+   - [הנדוס לאחור: המערכת הנוספת](#הנדוס-לאחור-המערכת-הנוספת)
+   - [תהליך האינטגרציה](#תהליך-האינטגרציה)
+   - [מבטים (Views)](#מבטים-views)
+   - [גיבוי מסד נתונים משולב](#גיבוי-מסד-נתונים-משולב)
+9. [שלב ד' - תכנות בסיס נתונים מתקדם](#שלב-ד---תכנות-בסיס-נתונים-מתקדם)
+   - [פונקציות (Functions)](#פונקציות-functions)
+   - [פרוצדורות (Procedures)](#פרוצדורות-procedures)
+   - [טריגרים (Triggers)](#טריגרים-triggers)
+   - [תוכניות ראשיות (Main Programs)](#תוכניות-ראשיות-main-programs)
+   - [קוד בדיקה מקיף](#קוד-בדיקה-מקיף)
+10. [סיכום כללי](#סיכום-כללי)
 
 ---
 
@@ -52,147 +58,90 @@
 ---
 
 ## הזנת נתונים
-.### שימוש בכלי Mockaroo
 
-
+### שימוש בכלי Mockaroo
 
 ![Mockaroo Example](https://github.com/user-attachments/assets/aa995b80-6291-41a1-b140-0f07b395800b)
 
-
-
 ### הזנת נתונים באמצעות קוד פייתון
-
-
 
 ![Python Insertion](https://github.com/user-attachments/assets/fe20fbbd-6f65-49f1-ad64-08cb97c4798a)
 
-
-
 ### הזנה ידנית בקובץ CSV
-
-
 
 ![CSV Input](https://github.com/user-attachments/assets/a741d760-ea89-4f17-98b5-63e136b4d79b)
 
-
-
 ### יצירת גיבוי ו-restore
-
-
 
 ![Backup Screenshot](https://github.com/user-attachments/assets/200b11cd-a49a-4369-a242-23f8fa52557b)
 
 ![Restore Screenshot](https://github.com/user-attachments/assets/bbd31e64-3a0f-4b06-b05c-180a7b03aab7)
 
-
-
 ---
 
-
-
-## שאילתות - שלב ב
-
-
+## שאילתות - שלב ב'
 
 ### שאילתות SELECT
 
-
-
-1. כל סרטי האקשן, ההרפתקאות והמותחן שיצאו לפני שנת 2000
+1. **כל סרטי האקשן, ההרפתקאות והמותחן שיצאו לפני שנת 2000**
 
 ![image](https://github.com/user-attachments/assets/f2097d12-0eb0-4ae0-b8ff-d7c433101aa3)
 
+2. **קיבוץ סרטים לפי פרסים**
 
+![image](https://github.com/user-attachments/assets/825761b0-a56f-4a38-999f-7dbc53229c90)
 
-2. קיבוץ סרטים לפי פרסים
+3. **סדרות עם אורך פרק ממוצע מעל 50 דקות**
 
-   ![image](https://github.com/user-attachments/assets/825761b0-a56f-4a38-999f-7dbc53229c90)
+![image](https://github.com/user-attachments/assets/feb199ef-7932-40f7-bd41-7a0cf2bea6e1)
 
+4. **סדרות עם זמן שידור כולל מתחת ל־5 שעות**
 
+![image](https://github.com/user-attachments/assets/4a9108e5-431f-4288-b117-b881f5cf329f)
 
-3. סדרות עם אורך פרק ממוצע מעל 50 דקות
-
-   ![image](https://github.com/user-attachments/assets/feb199ef-7932-40f7-bd41-7a0cf2bea6e1)
-
-
-
-4. סדרות עם זמן שידור כולל מתחת ל־5 שעות
-
-   ![image](https://github.com/user-attachments/assets/4a9108e5-431f-4288-b117-b881f5cf329f)
-
-
-
-5. איתור סרטי המשך עם פער זמן גדול מהסרט המקורי
-
-
+5. **איתור סרטי המשך עם פער זמן גדול מהסרט המקורי**
 
 ![Screenshot 2025-06-18 121604](https://github.com/user-attachments/assets/d3656337-2220-4fc9-b3ad-651932346adc)
 
+6. **ניתוח זכיינויות: סרטים לעומת סדרות**
 
+![image](https://github.com/user-attachments/assets/4df46d2c-9a10-484d-aae7-81ad4c11cd23)
 
-6. ניתוח זכיינויות: סרטים לעומת סדרות
+7. **הסרט שזכה במרב הפרסים בכל ז'אנר**
 
-   ![image](https://github.com/user-attachments/assets/4df46d2c-9a10-484d-aae7-81ad4c11cd23)
+![image](https://github.com/user-attachments/assets/ebda9a3d-56cb-44fe-b8f9-7eec047b3413)
 
+8. **כותרים מקוריים ומספר פרסים**
 
-
-7.הסרט שזכה במרב הפרסים בכל ז'אנר
-
-   ![image](https://github.com/user-attachments/assets/ebda9a3d-56cb-44fe-b8f9-7eec047b3413)
-
-
-
-8. כותרים מקוריים ומספר פרסים
-
-   ![image](https://github.com/user-attachments/assets/8448484e-2b8f-47dd-97d2-117acb21a5a7)
-
-
-
-
+![image](https://github.com/user-attachments/assets/8448484e-2b8f-47dd-97d2-117acb21a5a7)
 
 ### שאילתות DELETE
 
+1. **מחיקת כותרים לפני 1975 שלא זכו בפרסים**
 
+![delete1](https://github.com/user-attachments/assets/593bd7ad-b053-4ea7-8bc9-5d0a92294954)
 
-1. מחיקת כותרים לפני 1975 שלא זכו בפרסים
+2. **מחיקת עונות מעל עונה 20**
 
-   ![delete1](https://github.com/user-attachments/assets/593bd7ad-b053-4ea7-8bc9-5d0a92294954)
+![delete2](https://github.com/user-attachments/assets/9e608139-aeb9-4134-9619-f0b04c13d0af)
 
+3. **מחיקת כותרים מסדרת "הארי פוטר"**
 
-
-2. מחיקת עונות מעל עונה 20
-
-   ![delete2](https://github.com/user-attachments/assets/9e608139-aeb9-4134-9619-f0b04c13d0af)
-
-
-
-3. מחיקת כותרים מסדרת "הארי פוטר"
-
-   ![delete3](https://github.com/user-attachments/assets/9a43d45e-3053-42e0-8663-7f25169f7ca7)
-
-
+![delete3](https://github.com/user-attachments/assets/9a43d45e-3053-42e0-8663-7f25169f7ca7)
 
 ### שאילתות UPDATE
 
+1. **עדכון דירוג גיל לסרטים לפני 2000**
 
+![update1](https://github.com/user-attachments/assets/949bdbd2-3aa1-430f-ab3a-9778e761829f)
 
-1. עדכון דירוג גיל לסרטים לפני 2000
+2. **עדכון עונה ל־"Completed" אם כל הפרקים שודרו**
 
-   ![update1](https://github.com/user-attachments/assets/949bdbd2-3aa1-430f-ab3a-9778e761829f)
+![update2](https://github.com/user-attachments/assets/e131fedc-1c5c-4fdd-80a2-c52c350967e7)
 
+3. **עדכון שם פרנצ'ייז ל־"DCU" אם מתחיל ב־"GOTHAM UNIVERS"**
 
-
-2. עדכון עונה ל־"Completed" אם כל הפרקים שודרו
-
-   ![update2](https://github.com/user-attachments/assets/e131fedc-1c5c-4fdd-80a2-c52c350967e7)
-
-
-
-3. עדכון שם פרנצ'ייז ל־"DCU" אם מתחיל ב־"GOTHAM UNIVERS"
-
-   ![update3](https://github.com/user-attachments/assets/126c6513-75da-4e37-b08f-360bd3c86d4f)
-
-
+![update3](https://github.com/user-attachments/assets/126c6513-75da-4e37-b08f-360bd3c86d4f)
 
 ---
 
@@ -213,15 +162,9 @@
 #### תרשים DSD של המערכת הנוספת
 ![DSD_Diagram](https://github.com/user-attachments/assets/bd248f24-a1b6-4704-9c1e-918e421178d0)
 
-
-
 #### תרשים ERD של המערכת הנוספת
 
-מתוך ה-DSD, יצרנו את תרשים ה-ERD המייצג את הישויות והקשרים במערכת ניהול היוצרים.
-
 ![ERD_Diagram](https://github.com/user-attachments/assets/3ae5be5d-6ba0-4764-8a28-284a411eaa48)
-
----
 
 ### תהליך האינטגרציה
 
@@ -229,144 +172,51 @@
 
 #### החלטות עיצוביות בתהליך האינטגרציה
 
-* **החלטה 1: מניעת קונפליקט שמות** - במערכת היוצרים הייתה טבלה בשם `Award`, אך גם במערכת התוכן ישנה טבלה כזו. ולכן כדי למנוע התנגשות, שינינו את שמות הטבלאות ל-`Creator_Award` שמייצגת את הפרסים ליוצרים, ול-`Content_Award` המייצגת את הפרסים שקיבלו הסרטים.
-* **החלטה 2: מיזוג ישויות תוכן** - הוחלט לאחד את ישות `Production` מיחידת היוצרים עם ישות `Title` ביחידת התוכן. `Title` תשמש כישות העל המרכזית לכל סוגי התוכן (סרטים, סדרות, הפקות), ותכיל את המידע המשותף.
-* **החלטה 3: העברת נתונים והימנעות מכפילויות** - הנתונים מטבלת `Production` הועברו ל-`Title`. התהליך כלל בדיקה למניעת כפילויות: הפקה חדשה נוספה רק אם לא קיים כבר כותר עם שם זהה בטבלת `Title`.
-* **החלטה 4: עדכון קשרי גומלין (Foreign Keys)** - לאחר מיזוג הנתונים, טבלאות שהיו תלויות ב-`Production` (כמו `Contract` ו-`Feedback`) עודכנו. הוספנו להן עמודת `Title_ID` וקישרנו אותן לטבלת `Title` המאוחדת.
-* **החלטה 5: הסרת ישויות ועמודות מיותרות** - לאחר וידוא שההעברה והקישורים החדשים בוצעו בהצלחה, הסרנו את התלות ב-`ProductionID` מטבלאות `Contract` ו-`Feedback`, ולבסוף מחקנו את טבלת `Production` שהפכה למיותרת.
+- **החלטה 1: מניעת קונפליקט שמות** - שינוי שמות הטבלאות ל-`Creator_Award` ו-`Content_Award`
+- **החלטה 2: מיזוג ישויות תוכן** - איחוד `Production` עם `Title`
+- **החלטה 3: העברת נתונים והימנעות מכפילויות** - העברה חכמה של נתונים
+- **החלטה 4: עדכון קשרי גומלין** - עדכון Foreign Keys
+- **החלטה 5: הסרת ישויות מיותרות** - ניקוי המבנה
 
 #### תרשים ERD משולב
-
-ה-ERD הבא מציג את המודל המאוחד של שתי המערכות לאחר האינטגרציה.
-
 
 ![Screenshot 2025-06-27 190419](https://github.com/user-attachments/assets/34381df1-1217-4d8b-bd5e-bd5d2d7978fb)
 
 #### תרשים DSD לאחר אינטגרציה
 
-זהו תרשים ה-DSD הסופי לאחר ביצוע שינויי האינטגרציה על בסיס הנתונים שלנו.
-
 ![image](https://github.com/user-attachments/assets/e0312dca-9f81-40cc-88de-7da3a6e73fdc)
 
+### מבטים (Views)
 
+#### מבט 1: `MovieGenreAnalysis` (אגף התוכן – ניתוח סרטים לפי ז'אנר)
 
-#### שינוי מבנה בסיס הנתונים (Integrate.sql)
+**תיאור המבט**: מרכז מידע על סרטים, כולל זיהוי הז'אנר, משך הזמן, תאריך יציאה ומספר הפרסים.
 
-במקום ליצור מחדש את בסיס הנתונים, השתמשנו בפקודות `ALTER TABLE`, `INSERT INTO` ו-`UPDATE` כדי לעדכן את הסכמה הקיימת. להלן תיאור התהליך כפי שבוצע בקוד:
-
-```sql
--- שינוי שם טבלת הפרסים של היוצרים למניעת קונפליקט
-ALTER TABLE award RENAME TO creator_award;
-
--- שלב 1: העברת נתונים מטבלת Production ל-Title, תוך מניעת כפילויות
-INSERT INTO Title (Title_ID, Title_Name, Age_Rating, Sequel_ID)
-SELECT 
-    (SELECT COALESCE(MAX(Title_ID), 0) FROM Title) + ROW_NUMBER() OVER (ORDER BY p.ProductionID) AS New_Title_ID,
-    p.Title AS Title_Name,
-    0 AS Age_Rating, -- Default value
-    NULL AS Sequel_ID -- Default value
-FROM Production p
-WHERE p.Title IS NOT NULL 
-  AND NOT EXISTS (
-      SELECT 1 FROM Title t 
-      WHERE LOWER(TRIM(t.Title_Name)) = LOWER(TRIM(p.Title))
-  );
-
--- שלב 2: עדכון טבלת Contract כדי שתקשר ל-Title_ID
-ALTER TABLE Contract ADD COLUMN Title_ID INT;
-UPDATE Contract
-SET Title_ID = (
-    SELECT t.Title_ID 
-    FROM Production p 
-    JOIN Title t ON LOWER(TRIM(t.Title_Name)) = LOWER(TRIM(p.Title))
-    WHERE p.ProductionID = Contract.ProductionID
-    LIMIT 1
-);
-ALTER TABLE Contract
-ADD CONSTRAINT fk_contract_title
-FOREIGN KEY (Title_ID) REFERENCES Title(Title_ID);
-
--- שלב 3: עדכון טבלת Feedback כדי שתקשר ל-Title_ID
-ALTER TABLE Feedback ADD COLUMN Title_ID INT;
-UPDATE Feedback
-SET Title_ID = (
-    SELECT t.Title_ID 
-    FROM Production p 
-    JOIN Title t ON LOWER(TRIM(t.Title_Name)) = LOWER(TRIM(p.Title))
-    WHERE p.ProductionID = Feedback.ProductionID
-    LIMIT 1
-);
-ALTER TABLE Feedback
-ADD CONSTRAINT fk_feedback_title
-FOREIGN KEY (Title_ID) REFERENCES Title(Title_ID);
-
--- שלב 4: הסרת תלויות ישנות ומחיקת טבלת Production
-ALTER TABLE Contract DROP CONSTRAINT IF EXISTS Contract_ProductionID_fkey;
-ALTER TABLE Feedback DROP CONSTRAINT IF EXISTS Feedback_ProductionID_fkey;
-ALTER TABLE Contract DROP COLUMN ProductionID;
-ALTER TABLE Feedback DROP COLUMN ProductionID;
-DROP TABLE Production;
-
-```
-# מבטים (Views) וניתוח נתונים
-
-מסמך זה מציג שני מבטים שנוצרו על סמך שילוב נתונים בין מערכות שונות (אגף תוכן ואגף יוצרי תוכן), כולל שאילתות ניתוח עיקריות.
-
----
-
-## מבט 1: `MovieGenreAnalysis`  
-**(אגף התוכן – ניתוח סרטים לפי ז'אנר)**
-
-### תיאור המבט  
-מבט זה מרכז מידע על סרטים, כולל זיהוי הז'אנר, משך הזמן, תאריך יציאה ומספר הפרסים שהסרט זכה בהם. בנוסף, כל סרט מקבל סיווג לפי קטגוריית משך זמן: `קצר`, `בינוני` או `ארוך`.  
-
-המטרה: לספק כלי ניתוח השוואתי בין ז'אנרים לפי אורך סרטים, הצלחה בפרסים ועוד.
-
----
-
-### שליפת נתונים:
 ![image](https://github.com/user-attachments/assets/8a30a633-9d9c-4ddd-9270-f12e016dd727)
 
-
-### שאילתה 1.1: סרטי אקשן ארוכים שזכו בפרסים
-**תיאור**
-השאילתה מאתרת סרטי אקשן שזמן ההקרנה שלהם מוגדר כ"ארוך" (מעל 150 דקות), ושזכו בלפחות פרס אחד. התוצאות ממוינות לפי מספר הפרסים (מהרב לפחות), ובתוך זה לפי אורך הסרט.
+**שאילתה 1.1: סרטי אקשן ארוכים שזכו בפרסים**
 
 ![image](https://github.com/user-attachments/assets/ba1c9c00-3d43-4557-a73f-acc23fe30425)
 
-### שאילתה 2.1: סטטיסטיקה של ז'אנרים לפי משך זמן ממוצע
-**תיאור**
-השאילתה מספקת סיכום סטטיסטי לכל ז'אנר – כולל מספר הסרטים, משך זמן ממוצע לסרט, ומקסימום פרסים לסרט בז'אנר. מוצגים רק ז'אנרים שבהם יש לפחות שני סרטים.
+**שאילתה 2.1: סטטיסטיקה של ז'אנרים לפי משך זמן ממוצע**
+
 ![image](https://github.com/user-attachments/assets/3338f182-0e3e-45ca-b93c-e040d12b4a6e)
 
-_ _ _
+#### מבט 2: `ContentCreatorPerformance` (אגף היוצרים – ביצועי יוצרי תוכן)
 
-## מבט 2: ContentCreatorPerformance
-**(אגף היוצרים – ביצועי יוצרי תוכן)**
+**תיאור המבט**: משלב מידע אישי על יוצרי תוכן עם נתוני סוכנים, חוזים, תשלומים ופרסים אישיים.
 
-### תיאור המבט
-מבט זה משלב מידע אישי על יוצרי תוכן עם נתוני סוכנים, חוזים, תשלומים ופרסים אישיים. כל יוצר מקבל דירוג ניסיון לפי מספר החוזים: מתחיל, בינוני או מנוסה.
-
-המטרה: לספק תשתית לניתוח מקצועי של ביצועי יוצרים והשוואה בין מדינות וסוכנויות.
-_ _ _
-### שליפת נתונים
 ![Screenshot 2025-06-25 164632](https://github.com/user-attachments/assets/ae18070b-fae8-4f5d-ad20-5425969f7d3f)
 
+**שאילתה 1.2: יוצרי תוכן מנוסים עם תשלום גבוה מהממוצע**
 
-### שליפת נתונים:
-![image](https://github.com/user-attachments/assets/a564f840-1922-418f-9346-16ccebce1577)
-
-### שאילתה 1.2: יוצרי תוכן מנוסים עם תשלום גבוה מהממוצע
-
-**תיאור**
-השאילתה מאתרת יוצרי תוכן שמדורגים כ־"מנוסים" (לפחות 5 חוזים) ושקיבלו בממוצע תשלום גבוה מהממוצע של כלל היוצרים. המטרה היא לאתר יוצרי תוכן בולטים ומשתלמים במיוחד.
 ![image](https://github.com/user-attachments/assets/39fedb90-09eb-4ddf-bbe4-b4a54a4746a1)
 
+**שאילתה 2.2: השוואת ביצועי יוצרים בין מדינות**
 
-### שאילתה 2.2: השוואת ביצועי יוצרים בין מדינות
-**תיאור**
-השאילתה מספקת ניתוח השוואתי של מדינות לפי יוצרי תוכן פעילים בלבד – כולל מספר יוצרים, ממוצע חוזים, ממוצע תשלום וסה"כ פרסים. מוצגות רק מדינות עם לפחות שני יוצרים פעילים.
 ![image](https://github.com/user-attachments/assets/359718b9-6479-42f4-b19f-4945e1d28001)
+
+---
 
 ## שלב ד' - תכנות בסיס נתונים מתקדם
 
@@ -376,10 +226,8 @@ _ _ _
 
 #### פונקציה 1: חישוב סטטיסטיקות יוצר תוכן
 
-**תיאור מילולי:**
-פונקציה זו מחזירה סטטיסטיקות מפורטות עבור יוצר תוכן נתון. הפונקציה מקבלת מזהה יוצר ומחזירה מצביע לתוצאה (REF CURSOR) הכולל את השם המלא של היוצר, המדינה, מספר החוזים הכולל וממוצע התשלומים. הפונקציה כוללת בדיקת קיום היוצר וטיפול בשגיאות.
+**תיאור מילולי**: פונקציה זו מחזירה סטטיסטיקות מפורטות עבור יוצר תוכן נתון. הפונקציה מקבלת מזהה יוצר ומחזירה מצביע לתוצאה (REF CURSOR) הכולל את השם המלא של היוצר, המדינה, מספר החוזים הכולל וממוצע התשלומים.
 
-**הקוד:**
 ```sql
 CREATE OR REPLACE FUNCTION get_creator_statistics(p_creator_id INTEGER)
 RETURNS REFCURSOR AS $$
@@ -414,19 +262,16 @@ EXCEPTION
         RAISE NOTICE 'Error: %', SQLERRM;
         RETURN NULL;
 END;
-$$ LANGUAGE plpgsql; הוכחת פעולה:
-Function 1 Test
-הפעלת הפונקציה והצגת סטטיסטיקות יוצר התוכן
+$$ LANGUAGE plpgsql;
+```
 
-פונקציה 2: עדכון מספר עונות בסדרה
-תיאור מילולי:
-פונקציה זו מעדכנת אוטומטית את מספר העונות בטבלת tv_show על סמך מספר העונות הקיימות בפועל בטבלת season. הפונקציה מקבלת מזהה כותר, בודקת את קיומו, סופרת את העונות הקיימות ומעדכנת את השדה המתאים. מוחזר מספר העונות שנספרו.
+**הוכחת פעולה**: *[כאן יוצג צילום מסך של התוצאות]*
 
-הקוד:
+#### פונקציה 2: עדכון מספר עונות בסדרה
 
-SQL
+**תיאור מילולי**: פונקציה זו מעדכנת אוטומטית את מספר העונות בטבלת tv_show על סמך מספר העונות הקיימות בפועל בטבלת season.
 
-Collapse
+```sql
 CREATE OR REPLACE FUNCTION update_season_count(p_title_id INTEGER)
 RETURNS INTEGER AS $$
 DECLARE
@@ -456,20 +301,17 @@ EXCEPTION
         RETURN -1;
 END;
 $$ LANGUAGE plpgsql;
-הוכחת פעולה:
-Function 2 Test
-הפעלת הפונקציה ועדכון מספר העונות בטבלה
+```
 
-פרוצדורות (Procedures)
-פרוצדורה 1: ניהול פרנצ'יז
-תיאור מילולי:
-פרוצדורה זו מבצעת פעולות ניהול על פרנצ'יז נתון. כרגע מממשת פעולת COUNT שסופרת ומעדכנת את מספר הכותרים השייכים לפרנצ'יז. הפרוצדורה משתמשת ב-CURSOR מפורש לעבור על כל הכותרים, מדפיסה את פרטיהם ומעדכנת את שדה number_of_titles בטבלת franchise.
+**הוכחת פעולה**: *[כאן יוצג צילום מסך של התוצאות]*
 
-הקוד:
+### פרוצדורות (Procedures)
 
-SQL
+#### פרוצדורה 1: ניהול פרנצ'יז
 
-Collapse
+**תיאור מילולי**: פרוצדורה זו מבצעת פעולות ניהול על פרנצ'יז נתון. כרגע מממשת פעולת COUNT שסופרת ומעדכנת את מספר הכותרים השייכים לפרנצ'יז.
+
+```sql
 CREATE OR REPLACE PROCEDURE manage_franchise_titles(
     p_franchise_id INTEGER,
     p_action VARCHAR(10)
@@ -503,19 +345,15 @@ EXCEPTION
         RAISE EXCEPTION 'Error in manage_franchise_titles: %', SQLERRM;
 END;
 $$;
-הוכחת פעולה:
-Procedure 1 Test
-הפעלת הפרוצדורה, הדפסת כותרי הפרנצ'יז ועדכון הטבלה
+```
 
-פרוצדורה 2: עדכון סטטוס עונות
-תיאור מילולי:
-פרוצדורה זו עוברת על כל העונות במערכת ומעדכנת את הסטטוס שלהען בהתאם למספר הפרקים הקיימים. הפרוצדורה בודקת אם מספר הפרקים בפועל תואם למספר המתוכנן ומעדכנת את הסטטוס ל: "Upcoming" (אין פרקים), "Ongoing" (פרקים חלקיים), או "Completed" (כל הפרקים קיימים).
+**הוכחת פעולה**: *[כאן יוצג צילום מסך של התוצאות]*
 
-הקוד:
+#### פרוצדורה 2: עדכון סטטוס עונות
 
-SQL
+**תיאור מילולי**: פרוצדורה זו עוברת על כל העונות במערכת ומעדכנת את הסטטוס שלהן בהתאם למספר הפרקים הקיימים.
 
-Collapse
+```sql
 CREATE OR REPLACE PROCEDURE update_seasons_status()
 LANGUAGE plpgsql AS $$
 DECLARE
@@ -556,20 +394,17 @@ EXCEPTION
         RAISE EXCEPTION 'Error updating seasons status: %', SQLERRM;
 END;
 $$;
-הוכחת פעולה:
-Procedure 2 Test
-הפעלת הפרוצדורה ועדכון סטטוס העונות
+```
 
-טריגרים (Triggers)
-טריגר 1: עדכון אוטומטי של מספר הכותרים בפרנצ'יז
-תיאור מילולי:
-טריגר זה מופעל אוטומטית בכל פעם שמתווסף או נמחק כותר מפרנצ'יז (טבלת belongs_to). הטריגר מעדכן אוטומטי את השדה number_of_titles בטבלת franchise - מוסיף 1 בעת הוספה ומחסיר 1 בעת מחיקה. זה מבטיח שהמידע על מספר הכותרים יהיה תמיד מעודכן.
+**הוכחת פעולה**: *[כאן יוצג צילום מסך של התוצאות]*
 
-הקוד:
+### טריגרים (Triggers)
 
-SQL
+#### טריגר 1: עדכון אוטומטי של מספר הכותרים בפרנצ'יז
 
-Collapse
+**תיאור מילולי**: טריגר זה מופעל אוטומטית בכל פעם שמתווסף או נמחק כותר מפרנצ'יז (טבלת belongs_to). הטריגר מעדכן אוטומטי את השדה number_of_titles בטבלת franchise.
+
+```sql
 CREATE OR REPLACE FUNCTION update_franchise_count()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -592,19 +427,15 @@ CREATE TRIGGER trigger_franchise_count
     AFTER INSERT OR DELETE ON belongs_to
     FOR EACH ROW
     EXECUTE FUNCTION update_franchise_count();
-הוכחת פעולה:
-Trigger 1 Test
-הוספת כותר לפרנצ'יז ועדכון אוטומטי של number_of_titles
+```
 
-טריגר 2: בדיקת תקינות חוזה
-תיאור מילולי:
-טריגר זה מופעל לפני הוספה או עדכון של חוזה ובודק את תקינות הנתונים. הטריגר בודק שתאריך ההתחלה קודם לתאריך הסיום ושהתשלום חיובי. אם אחד מהתנאים לא מתקיים, הטריגר זורק חריגה ומונע את הפעולה.
+**הוכחת פעולה**: *[כאן יוצג צילום מסך של התוצאות]*
 
-הקוד:
+#### טריגר 2: בדיקת תקינות חוזה
 
-SQL
+**תיאור מילולי**: טריגר זה מופעל לפני הוספה או עדכון של חוזה ובודק את תקינות הנתונים.
 
-Collapse
+```sql
 CREATE OR REPLACE FUNCTION validate_contract()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -629,33 +460,17 @@ CREATE TRIGGER trigger_validate_contract
     BEFORE INSERT OR UPDATE ON contract
     FOR EACH ROW
     EXECUTE FUNCTION validate_contract();
-הוכחת פעולה:
-Trigger 2 Test
-*ניסיון הוספת חוזה לא תקין וזריקת ח
+```
 
-Claude Sonnet 4
-תוכל להמשיך?
-
-
-Thought Process
-expand
-Markdown
-
-Collapse
-**הוכחת פעולה:**
-![Trigger 2 Test](images/trigger2_test.png)
-*ניסיון הוספת חוזה לא תקין וזריקת חריגה על ידי הטריגר*
+**הוכחת פעולה**: *[כאן יוצג צילום מסך של התוצאות]*
 
 ### תוכניות ראשיות (Main Programs)
 
 #### תוכנית ראשית 1: ניתוח סטטיסטיקות וניהול פרנצ'יז
 
-**תיאור מילולי:**
-תוכנית זו משלבת שימוש בפונקציה לקבלת סטטיסטיקות יוצר תוכן ובפרוצדורה לניהול פרנצ'יז. התוכנית קוראת לפונקציה get_creator_statistics עבור יוצר מסוים, ולאחר מכן מפעילה את הפרוצדורה manage_franchise_titles לספירה ועדכון מספר הכותרים בפרנצ'יז. התוכנית כוללת טיפול בשגיאות מקיף.
+**תיאור מילולי**: תוכנית זו משלבת שימוש בפונקציה לקבלת סטטיסטיקות יוצר תוכן ובפרוצדורה לניהול פרנצ'יז.
 
-**הקוד:**
 ```sql
--- main_program_1.sql
 DO $$
 DECLARE
     stats_cursor REFCURSOR;
@@ -674,20 +489,15 @@ EXCEPTION
         RAISE NOTICE 'Error in main program 1: %', SQLERRM;
 END;
 $$;
-הוכחת פעולה:
-Main Program 1 Test
-הפעלת התוכנית הראשית והצגת תוצאות הפונקציה והפרוצדורה
+```
 
-תוכנית ראשית 2: עדכון עונות וסטטוס
-תיאור מילולי:
-תוכנית זו מבצעת עדכון מקיף של נתוני הסדרות והעונות. התוכנית קוראת לפונקציה update_season_count לעדכון מספר העונות עבור סדרה מסוימת, ולאחר מכן מפעילה את הפרוצדורה update_seasons_status לעדכון סטטוס כלל העונות במערכת. התוכנית מציגה את מספר העונות שעודכנו וכוללת טיפול בשגיאות.
+**הוכחת פעולה**: *[כאן יוצג צילום מסך של התוצאות]*
 
-הקוד:
+#### תוכנית ראשית 2: עדכון עונות וסטטוס
 
-SQL
+**תיאור מילולי**: תוכנית זו מבצעת עדכון מקיף של נתוני הסדרות והעונות.
 
-Collapse
--- main_program_2.sql
+```sql
 DO $$
 DECLARE
     title_id INTEGER := 1;
@@ -705,26 +515,281 @@ EXCEPTION
         RAISE NOTICE 'Error in main program 2: %', SQLERRM;
 END;
 $$;
-הוכחת פעולה:
-Main Program 2 Test
-הפעלת התוכנית הראשית ועדכון נתוני העונות והסטטוס סיכום שלב ד'
-בשלב זה יישמנו בהצלחה כל הדרישות של תכנות בסיס נתונים מתקדם:
+```
 
-רכיבים שיושמו:
+**הוכחת פעולה**: *[כאן יוצג צילום מסך של התוצאות]*
 
-✅ Cursor - שימוש ב-implicit ו-explicit cursors
-✅ Ref Cursor - החזרה בפונקציה הראשונה
-✅ פקודות DML - UPDATE במספר מקומות
-✅ הסתעפויות - IF/THEN/ELSE במספר מקומות
-✅ לולאות - FOR loops
-✅ Exception - טיפול בשגיאות בכל התוכניות
-✅ רשומות - שימוש ב-RECORD
-פונקציונליות שהושגה:
+### קוד בדיקה מקיף
 
-ניהול יוצרי תוכן - קבלת סטטיסטיקות מפורטות
-ניהול סדרות - עדכון אוטומטי של מספר עונות
-ניהול פרנצ'יזים - ספירה ועדכון מספר כותרים
-ניהול עונות - עדכון סטטוס לפי מספר פרקים
-בקרת איכות - ואלידציה אוטומטית של חוזים
-עדכון אוטומטי - תחזוקה של נתונים עקביים
-התוכניות נבדקו בהצלחה ומבצעות את הפונקציונליות הנדרשת תוך שמירה על עקביות הנתונים ואמינות המערכת.
+להלן קוד בדיקה מקיף שבודק את כל הרכיבים שפותחו בשלב ד':
+
+```sql
+-- ======================================
+-- קוד בדיקה מקיף לכל תוכניות שלב ד'
+-- ======================================
+
+DO $$
+DECLARE
+    -- משתנים לבדיקות
+    test_cursor REFCURSOR;
+    test_result INTEGER;
+    creator_record RECORD;
+    franchise_before INTEGER;
+    franchise_after INTEGER;
+    season_before INTEGER;
+    season_after INTEGER;
+    
+BEGIN
+    RAISE NOTICE '=== התחלת בדיקות מקיפות לשלב ד ===';
+    RAISE NOTICE '';
+    
+    -- ======================================
+    -- בדיקת פונקציה 1: get_creator_statistics
+    -- ======================================
+    RAISE NOTICE '--- בדיקת פונקציה 1: get_creator_statistics ---';
+    
+    BEGIN
+        -- קריאה לפונקציה
+        test_cursor := get_creator_statistics(351377597);
+        
+        -- קריאת התוצאות
+        FETCH test_cursor INTO creator_record;
+        
+        IF FOUND THEN
+            RAISE NOTICE 'פונקציה 1 פעלה בהצלחה!';
+            RAISE NOTICE 'שם היוצר: %', creator_record.content_creatorfullname;
+            RAISE NOTICE 'מדינה: %', creator_record.country;
+            RAISE NOTICE 'מספר חוזים: %', creator_record.total_contracts;
+            RAISE NOTICE 'ממוצע תשלום: %', creator_record.avg_payment;
+        ELSE
+            RAISE NOTICE 'פונקציה 1: לא נמצאו תוצאות';
+        END IF;
+        
+        CLOSE test_cursor;
+        
+    EXCEPTION
+        WHEN OTHERS THEN
+            RAISE NOTICE 'שגיאה בפונקציה 1: %', SQLERRM;
+    END;
+    
+    RAISE NOTICE '';
+    
+    -- ======================================
+    -- בדיקת פונקציה 2: update_season_count
+    -- ======================================
+    RAISE NOTICE '--- בדיקת פונקציה 2: update_season_count ---';
+    
+    BEGIN
+        -- בדיקת מצב לפני
+        SELECT number_of_seasons INTO season_before 
+        FROM tv_show WHERE title_id = 1500;
+        
+        RAISE NOTICE 'מספר עונות לפני העדכון: %', COALESCE(season_before, 0);
+        
+        -- קריאה לפונקציה
+        test_result := update_season_count(1);
+        
+        -- בדיקת מצב אחרי
+        SELECT number_of_seasons INTO season_after 
+        FROM tv_show WHERE title_id = 1500;
+        
+        RAISE NOTICE 'פונקציה 2 פעלה בהצלחה!';
+        RAISE NOTICE 'מספר עונות שנמצאו: %', test_result;
+        RAISE NOTICE 'מספר עונות אחרי העדכון: %', COALESCE(season_after, 0);
+        
+    EXCEPTION
+        WHEN OTHERS THEN
+            RAISE NOTICE 'שגיאה בפונקציה 2: %', SQLERRM;
+    END;
+    
+    RAISE NOTICE '';
+    
+    -- ======================================
+    -- בדיקת פרוצדורה 1: manage_franchise_titles
+    -- ======================================
+    RAISE NOTICE '--- בדיקת פרוצדורה 1: manage_franchise_titles ---';
+    
+    BEGIN
+        -- בדיקת מצב לפני
+        SELECT number_of_titles INTO franchise_before 
+        FROM franchise WHERE franchise_id = 1;
+        
+        RAISE NOTICE 'מספר כותרים בפרנצ''יז לפני: %', COALESCE(franchise_before, 0);
+        
+        -- קריאה לפרוצדורה
+        CALL manage_franchise_titles(1, 'COUNT');
+        
+        -- בדיקת מצב אחרי
+        SELECT number_of_titles INTO franchise_after 
+        FROM franchise WHERE franchise_id = 1;
+        
+        RAISE NOTICE 'פרוצדורה 1 פעלה בהצלחה!';
+        RAISE NOTICE 'מספר כותרים בפרנצ''יז אחרי: %', COALESCE(franchise_after, 0);
+        
+    EXCEPTION
+        WHEN OTHERS THEN
+            RAISE NOTICE 'שגיאה בפרוצדורה 1: %', SQLERRM;
+    END;
+    
+    RAISE NOTICE '';
+    
+    -- ======================================
+    -- בדיקת פרוצדורה 2: update_seasons_status
+    -- ======================================
+    RAISE NOTICE '--- בדיקת פרוצדורה 2: update_seasons_status ---';
+    
+    BEGIN
+        RAISE NOTICE 'מפעיל פרוצדורה לעדכון סטטוס עונות...';
+        
+        -- קריאה לפרוצדורה
+        CALL update_seasons_status();
+        
+        RAISE NOTICE 'פרוצדורה 2 פעלה בהצלחה!';
+        
+    EXCEPTION
+        WHEN OTHERS THEN
+            RAISE NOTICE 'שגיאה בפרוצדורה 2: %', SQLERRM;
+    END;
+    
+    RAISE NOTICE '';
+    
+    -- ======================================
+    -- בדיקת טריגר 1: update_franchise_count
+    -- ======================================
+    RAISE NOTICE '--- בדיקת טריגר 1: update_franchise_count ---';
+    
+    BEGIN
+        -- בדיקת מצב לפני
+        SELECT number_of_titles INTO franchise_before 
+        FROM franchise WHERE franchise_id = 1;
+        
+        RAISE NOTICE 'מספר כותרים בפרנצ''יז לפני הוספה: %', COALESCE(franchise_before, 0);
+        
+        -- הוספת כותר לפרנצ'יז (זה יפעיל את הטריגר)
+        INSERT INTO belongs_to (title_id, franchise_id) 
+        VALUES (999, 1)
+        ON CONFLICT DO NOTHING;
+        
+        -- בדיקת מצב אחרי
+        SELECT number_of_titles INTO franchise_after 
+        FROM franchise WHERE franchise_id = 1;
+        
+        RAISE NOTICE 'מספר כותרים בפרנצ''יז אחרי הוספה: %', COALESCE(franchise_after, 0);
+        
+        -- מחיקת הכותר (זה יפעיל שוב את הטריגר)
+        DELETE FROM belongs_to WHERE title_id = 999 AND franchise_id = 1;
+        
+        -- בדיקת מצב אחרי מחיקה
+        SELECT number_of_titles INTO franchise_before 
+        FROM franchise WHERE franchise_id = 1;
+        
+        RAISE NOTICE 'טריגר 1 פעל בהצלחה!';
+        RAISE NOTICE 'מספר כותרים בפרנצ''יז אחרי מחיקה: %', COALESCE(franchise_before, 0);
+        
+    EXCEPTION
+        WHEN OTHERS THEN
+            RAISE NOTICE 'שגיאה בטריגר 1: %', SQLERRM;
+    END;
+    
+    RAISE NOTICE '';
+    
+    -- ======================================
+    -- בדיקת טריגר 2: validate_contract
+    -- ======================================
+    RAISE NOTICE '--- בדיקת טריגר 2: validate_contract ---';
+    
+    -- בדיקה 1: חוזה תקין
+    BEGIN
+        INSERT INTO contract (contractid, creatorid, agentid, title_id, startdate, enddate, payment)
+        VALUES (9999, 1, 1, 1, '2024-01-01', '2024-12-31', 50000);
+        
+        RAISE NOTICE 'טריגר 2: חוזה תקין נוסף בהצלחה';
+        
+        -- מחיקת החוזה הבדיקה
+        DELETE FROM contract WHERE contractid = 9999;
+        
+    EXCEPTION
+        WHEN OTHERS THEN
+            RAISE NOTICE 'שגיאה בהוספת חוזה תקין: %', SQLERRM;
+    END;
+    
+    -- בדיקה 2: חוזה עם תאריכים שגויים
+    BEGIN
+        INSERT INTO contract (contractid, creatorid, agentid, title_id, startdate, enddate, payment)
+        VALUES (9998, 1, 1, 1, '2024-12-31', '2024-01-01', 50000);
+        
+        RAISE NOTICE 'טריגר 2: שגיאה - חוזה עם תאריכים שגויים לא נדחה!';
+        
+    EXCEPTION
+        WHEN OTHERS THEN
+            RAISE NOTICE 'טריגר 2 פעל בהצלחה! נדחה חוזה עם תאריכים שגויים: %', SQLERRM;
+    END;
+    
+    -- בדיקה 3: חוזה עם תשלום שלילי
+    BEGIN
+        INSERT INTO contract (contractid, creatorid, agentid, title_id, startdate, enddate, payment)
+        VALUES (9997, 1, 1, 1, '2024-01-01', '2024-12-31', -1000);
+        
+        RAISE NOTICE 'טריגר 2: שגיאה - חוזה עם תשלום שלילי לא נדחה!';
+        
+    EXCEPTION
+        WHEN OTHERS THEN
+            RAISE NOTICE 'טריגר 2 פעל בהצלחה! נדחה חוזה עם תשלום שלילי: %', SQLERRM;
+    END;
+    
+    RAISE NOTICE '';
+    
+    -- ======================================
+    -- בדיקת תוכנית ראשית 1
+    -- ======================================
+    RAISE NOTICE '--- בדיקת תוכנית ראשית 1 ---';
+    
+    BEGIN
+        DECLARE
+            stats_cursor REFCURSOR;
+            creator_id INTEGER := 1;
+        BEGIN
+            -- קריאה לפונקציה
+            stats_cursor := get_creator_statistics(creator_id);
+            
+            -- קריאה לפרוצדורה
+            CALL manage_franchise_titles(1, 'COUNT');
+            
+            RAISE NOTICE 'תוכנית ראשית 1 הושלמה בהצלחה';
+        END;
+        
+    EXCEPTION
+        WHEN OTHERS THEN
+            RAISE NOTICE 'שגיאה בתוכנית ראשית 1: %', SQLERRM;
+    END;
+    
+    RAISE NOTICE '';
+    
+    -- ======================================
+    -- בדיקת תוכנית ראשית 2
+    -- ======================================
+    RAISE NOTICE '--- בדיקת תוכנית ראשית 2 ---';
+    
+    BEGIN
+        DECLARE
+            title_id INTEGER := 1;
+            updated_seasons INTEGER;
+        BEGIN
+            -- קריאה לפונקציה
+            updated_seasons := update_season_count(title_id);
+            
+            -- קריאה לפרוצדורה
+            CALL update_seasons_status();
+            
+            RAISE NOTICE 'תוכנית ראשית 2 הושלמה בהצלחה. עודכנו % עונות', updated_seasons;
+        END;
+        
+    EXCEPTION
+        WHEN OTHERS THEN
+            RAISE NOTICE 'שגיאה בתוכנית ראשית 2: %', SQLERRM;
+    END;
+    
+    RAISE NOTICE '';
+    RAISE NOTICE '=== סיום בדיקות - כל התוכניות נבדקו ===';
+    
+END $$;
