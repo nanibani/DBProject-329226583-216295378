@@ -1,0 +1,18 @@
+DO $$
+DECLARE
+    stats_cursor REFCURSOR;
+    creator_id INTEGER := 1;
+    season_count INTEGER;
+BEGIN
+    -- קריאה לפונקציה
+    stats_cursor := get_creator_statistics(creator_id);
+    
+    -- קריאה לפרוצדורה
+    CALL manage_franchise_titles(1, 'COUNT');
+    
+    RAISE NOTICE 'Main program 1 completed successfully';
+EXCEPTION
+    WHEN OTHERS THEN
+        RAISE NOTICE 'Error in main program 1: %', SQLERRM;
+END;
+$$;
