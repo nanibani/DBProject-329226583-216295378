@@ -265,7 +265,9 @@ END;
 $$ LANGUAGE plpgsql;
 ```
 
-**הוכחת פעולה**: *[כאן יוצג צילום מסך של התוצאות]*
+**הוכחת פעולה**: 
+![image](https://github.com/user-attachments/assets/ffabbe89-6a2d-4d86-a602-44defb0ed8e5)
+
 
 #### פונקציה 2: עדכון מספר עונות בסדרה
 
@@ -303,7 +305,8 @@ END;
 $$ LANGUAGE plpgsql;
 ```
 
-**הוכחת פעולה**: *[כאן יוצג צילום מסך של התוצאות]*
+**הוכחת פעולה**: ![image](https://github.com/user-attachments/assets/09df440e-ae85-46f1-abbd-6b2f314901f9)
+
 
 ### פרוצדורות (Procedures)
 
@@ -347,7 +350,9 @@ END;
 $$;
 ```
 
-**הוכחת פעולה**: *[כאן יוצג צילום מסך של התוצאות]*
+**הוכחת פעולה**: 
+![image](https://github.com/user-attachments/assets/f4f8bd9b-a860-410a-8bbc-561ddfa4e6b5)
+
 
 #### פרוצדורה 2: עדכון סטטוס עונות
 
@@ -396,7 +401,9 @@ END;
 $$;
 ```
 
-**הוכחת פעולה**: *[כאן יוצג צילום מסך של התוצאות]*
+**הוכחת פעולה**: 
+![image](https://github.com/user-attachments/assets/1e0b7d20-c512-447b-aab9-a8f62fde65aa)
+
 
 ### טריגרים (Triggers)
 
@@ -429,7 +436,9 @@ CREATE TRIGGER trigger_franchise_count
     EXECUTE FUNCTION update_franchise_count();
 ```
 
-**הוכחת פעולה**: *[כאן יוצג צילום מסך של התוצאות]*
+**הוכחת פעולה**: 
+![image](https://github.com/user-attachments/assets/d95e5ac4-a220-4558-98b6-efdf1846cbb2)
+
 
 #### טריגר 2: בדיקת תקינות חוזה
 
@@ -462,7 +471,9 @@ CREATE TRIGGER trigger_validate_contract
     EXECUTE FUNCTION validate_contract();
 ```
 
-**הוכחת פעולה**: *[כאן יוצג צילום מסך של התוצאות]*
+**הוכחת פעולה**: 
+![image](https://github.com/user-attachments/assets/0f961c0d-a020-4797-be69-3eee29efa1a3)
+
 
 ### תוכניות ראשיות (Main Programs)
 
@@ -491,11 +502,14 @@ END;
 $$;
 ```
 
-**הוכחת פעולה**: *[כאן יוצג צילום מסך של התוצאות]*
+**הוכחת פעולה**: 
+![image](https://github.com/user-attachments/assets/661de9a4-c8f4-4d96-8501-b264bb4679e5)
+
 
 #### תוכנית ראשית 2: עדכון עונות וסטטוס
 
 **תיאור מילולי**: תוכנית זו מבצעת עדכון מקיף של נתוני הסדרות והעונות.
+
 
 ```sql
 DO $$
@@ -517,11 +531,14 @@ END;
 $$;
 ```
 
-**הוכחת פעולה**: *[כאן יוצג צילום מסך של התוצאות]*
+**הוכחת פעולה**: 
+![image](https://github.com/user-attachments/assets/f25eaa95-5315-4d91-b870-efff500abf04)
+
+---
 
 ### קוד בדיקה מקיף
 
-להלן קוד בדיקה מקיף שבודק את כל הרכיבים שפותחו בשלב ד':
+להלן קוד בדיקה מקיף שבודק את כל הרכיבים שפותחו בשלב ד' שאת תוצאותיו הצגנו כהוכחת נכונות הקוד:
 
 ```sql
 -- ======================================
@@ -587,7 +604,7 @@ BEGIN
         RAISE NOTICE 'מספר עונות לפני העדכון: %', COALESCE(season_before, 0);
         
         -- קריאה לפונקציה
-        test_result := update_season_count(1);
+        test_result := update_season_count(1500);
         
         -- בדיקת מצב אחרי
         SELECT number_of_seasons INTO season_after 
@@ -693,50 +710,82 @@ BEGIN
     
     RAISE NOTICE '';
     
-    -- ======================================
-    -- בדיקת טריגר 2: validate_contract
-    -- ======================================
-    RAISE NOTICE '--- בדיקת טריגר 2: validate_contract ---';
+-- ======================================
+-- בדיקת טריגר 2: validate_contract
+-- ======================================
+RAISE NOTICE '--- בדיקת טריגר 2: validate_contract ---';
+
+-- קודם כל, נוודא שיש לנו נתונים בסיסיים לבדיקה
+-- (התאם את השמות בהתאם למבנה הטבלאות שלך)
+
+-- בדיקה 1: חוזה תקין
+BEGIN
+    INSERT INTO contract (contractid, creatorid, title_id, startdate, enddate, payment)
+    VALUES (9999, 
+            (SELECT MIN(creatorid) FROM content_creator WHERE creatorid IS NOT NULL),  
+            (SELECT MIN(title_id) FROM title WHERE title_id IS NOT NULL), 
+            '2024-01-01', '2024-12-31', 50000);
     
-    -- בדיקה 1: חוזה תקין
-    BEGIN
-        INSERT INTO contract (contractid, creatorid, agentid, title_id, startdate, enddate, payment)
-        VALUES (9999, 1, 1, 1, '2024-01-01', '2024-12-31', 50000);
-        
-        RAISE NOTICE 'טריגר 2: חוזה תקין נוסף בהצלחה';
-        
-        -- מחיקת החוזה הבדיקה
-        DELETE FROM contract WHERE contractid = 9999;
-        
-    EXCEPTION
-        WHEN OTHERS THEN
-            RAISE NOTICE 'שגיאה בהוספת חוזה תקין: %', SQLERRM;
-    END;
+    RAISE NOTICE 'טריגר 2: חוזה תקין נוסף בהצלחה';
     
-    -- בדיקה 2: חוזה עם תאריכים שגויים
-    BEGIN
-        INSERT INTO contract (contractid, creatorid, agentid, title_id, startdate, enddate, payment)
-        VALUES (9998, 1, 1, 1, '2024-12-31', '2024-01-01', 50000);
-        
-        RAISE NOTICE 'טריגר 2: שגיאה - חוזה עם תאריכים שגויים לא נדחה!';
-        
-    EXCEPTION
-        WHEN OTHERS THEN
-            RAISE NOTICE 'טריגר 2 פעל בהצלחה! נדחה חוזה עם תאריכים שגויים: %', SQLERRM;
-    END;
+    -- מחיקת החוזה הבדיקה
+    DELETE FROM contract WHERE contractid = 9999;
     
-    -- בדיקה 3: חוזה עם תשלום שלילי
-    BEGIN
-        INSERT INTO contract (contractid, creatorid, agentid, title_id, startdate, enddate, payment)
-        VALUES (9997, 1, 1, 1, '2024-01-01', '2024-12-31', -1000);
-        
-        RAISE NOTICE 'טריגר 2: שגיאה - חוזה עם תשלום שלילי לא נדחה!';
-        
-    EXCEPTION
-        WHEN OTHERS THEN
-            RAISE NOTICE 'טריגר 2 פעל בהצלחה! נדחה חוזה עם תשלום שלילי: %', SQLERRM;
-    END;
+EXCEPTION
+    WHEN OTHERS THEN
+        RAISE NOTICE 'שגיאה בהוספת חוזה תקין: %', SQLERRM;
+END;
+
+-- בדיקה 2: חוזה עם תאריכים שגויים
+BEGIN
+    INSERT INTO contract (contractid, creatorid, title_id, startdate, enddate, payment)
+    VALUES (9998, 
+            (SELECT MIN(creatorid) FROM content_creator WHERE creatorid IS NOT NULL),
+            (SELECT MIN(title_id) FROM title WHERE title_id IS NOT NULL), 
+            '2024-12-31', '2024-01-01', 50000);
     
+    RAISE NOTICE 'טריגר 2: שגיאה - חוזה עם תאריכים שגויים לא נדחה!';
+    
+    -- אם הגענו לכאן, צריך למחוק את החוזה
+    DELETE FROM contract WHERE contractid = 9998;
+    
+EXCEPTION
+    WHEN OTHERS THEN
+        RAISE NOTICE 'טריגר 2 פעל בהצלחה! נדחה חוזה עם תאריכים שגויים: %', SQLERRM;
+END;
+
+-- בדיקה 3: חוזה עם תשלום שלילי
+BEGIN
+    INSERT INTO contract (contractid, creatorid, title_id, startdate, enddate, payment)
+    VALUES (9997, 
+            (SELECT MIN(creatorid) FROM content_creator WHERE creatorid IS NOT NULL),  
+            (SELECT MIN(title_id) FROM title WHERE title_id IS NOT NULL), 
+            '2024-01-01', '2024-12-31', -1000);
+    
+    RAISE NOTICE 'טריגר 2: שגיאה - חוזה עם תשלום שלילי לא נדחה!';
+    
+    -- אם הגענו לכאן, צריך למחוק את החוזה
+    DELETE FROM contract WHERE contractid = 9997;
+    
+EXCEPTION
+    WHEN OTHERS THEN
+        RAISE NOTICE 'טריגר 2 פעל בהצלחה! נדחה חוזה עם תשלום שלילי: %', SQLERRM;
+END;
+
+RAISE NOTICE '';
+
+-- גרסה חלופית אם אתה יודע את השמות המדויקים של העמודות:
+/*
+-- אם השמות שונים, השתמש בזה במקום:
+-- החלף את שמות העמודות בהתאם למבנה הטבלאות שלך:
+-- creatorid -> creator_id (אם זה השם הנכון)
+-- agentid -> agent_id (אם זה השם הנכון)  
+-- title_id -> titleid (אם זה השם הנכון)
+
+-- לדוגמה:
+INSERT INTO contract (contractid, creator_id, agent_id, titleid, startdate, enddate, payment)
+VALUES (9999, 1, 1, 1, '2024-01-01', '2024-12-31', 50000);
+*/
     RAISE NOTICE '';
     
     -- ======================================
@@ -747,7 +796,7 @@ BEGIN
     BEGIN
         DECLARE
             stats_cursor REFCURSOR;
-            creator_id INTEGER := 1;
+            creator_id INTEGER :=351377597;
         BEGIN
             -- קריאה לפונקציה
             stats_cursor := get_creator_statistics(creator_id);
@@ -772,7 +821,7 @@ BEGIN
     
     BEGIN
         DECLARE
-            title_id INTEGER := 1;
+            title_id INTEGER := 1500;
             updated_seasons INTEGER;
         BEGIN
             -- קריאה לפונקציה
