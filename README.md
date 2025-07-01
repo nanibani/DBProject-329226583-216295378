@@ -897,7 +897,7 @@ END $$;
 -   **שאילתות ופונקציות מתקדמות**: הרצת שאילתות מורכבות ופונקציות שהוגדרו בשלב ב' וד'.
   ### השאילתות משלב ב':
 
-    ![image](https://github.com/user-attachments/assets/4d18ba36-1bb0-41b3-adbb-78899b4d4370)
+![image](https://github.com/user-attachments/assets/4d18ba36-1bb0-41b3-adbb-78899b4d4370)
 
 
 ### הפונקציה והפרוצדורה משלב ד':
